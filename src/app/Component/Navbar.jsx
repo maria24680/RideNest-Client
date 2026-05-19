@@ -1,4 +1,5 @@
 // components/Navbar.jsx
+import Link from 'next/link';
 import React from 'react';
 
 const Navbar = () => {
@@ -14,12 +15,20 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            <a href="#" className="font-medium text-gray-700 hover:text-[#2A6F8F] transition">Home</a>
-            <a href="#" className="font-medium text-gray-700 hover:text-[#2A6F8F] transition">Explore Cars</a>
-            <a href="#" className="font-medium text-gray-700 hover:text-[#2A6F8F] transition">Add Car</a>
-            <a href="#" className="font-medium text-gray-700 hover:text-[#2A6F8F] transition">My Bookings</a>
-          </div>
+          <ul className="hidden md:flex items-center gap-8">
+            <li>
+               <Link className="font-medium text-gray-700 hover:text-[#2A6F8F] transition" href={"/"}>Home</Link> 
+            </li>
+            <li>
+               <Link className="font-medium text-gray-700 hover:text-[#2A6F8F] transition" href={"/explore-cars"}>Explore Cars</Link> 
+            </li>
+            <li>
+               <Link className="font-medium text-gray-700 hover:text-[#2A6F8F] transition" href={"/add-car"}>Add Car</Link> 
+            </li>
+            <li>
+               <Link className="font-medium text-gray-700 hover:text-[#2A6F8F] transition" href={"/my-bookings"}>My Bookings</Link> 
+            </li>
+            </ul>
 
           {/* Auth Buttons */}
           <div className="flex gap-3">
