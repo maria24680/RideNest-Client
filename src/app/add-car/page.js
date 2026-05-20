@@ -48,7 +48,7 @@ const AddCarPage = () => {
 
           <input
             name="type"
-            placeholder="Car Type (SUV / Sedan)"
+            placeholder="Car Type (SUV / Sedan / Luxury)"
             className="w-full p-3 border border-gray-400 rounded-lg text-black bg-white focus:outline-none focus:ring-2 focus:ring-[#2A6F8F]"
           />
 

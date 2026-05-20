@@ -68,27 +68,31 @@ export default function ExploreCars() {
       </div>
 
       {/* SEARCH + FILTER */}
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-4 mb-8">
+       {/* SEARCH + FILTER */}
+<div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-4 mb-8">
 
-        <input
-          type="text"
-          placeholder="Search car name..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="flex-1 p-3 border border-gray-300 rounded-xl bg-white text-black"
-        />
+  <input
+    type="text"
+    placeholder="Search car name..."
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+    className="flex-1 w-full p-3 border border-gray-300 rounded-xl bg-white text-black"
+  />
 
-        <select
-          value={type}
-          onChange={(e) => setType(e.target.value)}
-          className="p-3 border border-gray-300 rounded-xl bg-white text-black"
-        >
-          <option value="">All Types</option>
-          <option value="SUV">SUV</option>
-          <option value="Sedan">Sedan</option>
-          <option value="Luxury">Luxury</option>
-        </select>
-      </div>
+  <div className="w-full sm:w-full md:w-56">
+  <select
+    value={type}
+    onChange={(e) => setType(e.target.value)}
+    className="w-full p-3 border border-gray-300 rounded-xl bg-white text-black text-sm sm:text-base"
+  >
+    <option value="">All Types</option>
+    <option value="SUV">SUV</option>
+    <option value="Sedan">Sedan</option>
+    <option value="Luxury">Luxury</option>
+  </select>
+</div>
+
+</div>
 
       {/* CAR GRID */}
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -101,7 +105,7 @@ export default function ExploreCars() {
           return (
             <div
               key={car?._id || index}
-              className="bg-white rounded-2xl shadow-md overflow-hidden border"
+              className="relative z-1 bg-white rounded-2xl shadow-md border"
             >
 
               {/* IMAGE */}
@@ -130,7 +134,7 @@ export default function ExploreCars() {
                 {/* AVAILABILITY */}
                 <p
                   className={`mt-2 font-medium ${
-                    isAvailable ? "text-green-600" : "text-red-600"
+                    isAvailable ? "text-blue-400" : "text-red-400"
                   }`}
                 >
                   {isAvailable ? "Available" : "Not Available"}
@@ -138,7 +142,7 @@ export default function ExploreCars() {
 
                 {/* VIEW DETAILS */}
                 <Link href={`/car/${car?._id}`}>
-                  <button className="w-full mt-3 py-2 bg-blue-700 text-white rounded hover:opacity-90 transition">
+                  <button className="w-full mt-3 py-2 bg-[#1E3C5C] text-white rounded hover:opacity-90 transition">
                     View Details
                   </button>
                 </Link>
