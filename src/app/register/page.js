@@ -80,7 +80,7 @@ export default function RegisterPage() {
 
    const handleGoogle = async () => {
       try {
-        toast.info("Connecting to Google...");
+        toast.info("Signup Successfully...");
         await authClient.signIn.social({
           provider: "google",
         });

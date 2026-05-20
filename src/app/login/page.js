@@ -36,7 +36,7 @@ export default function LoginPage() {
         return;
       }
 
-      toast.success("Welcome Back RideNest");
+      toast.success("Welcome to RideNest 🚗");
       setTimeout(() => {
         window.location.href = "/";
       }, 1500);
@@ -49,7 +49,7 @@ export default function LoginPage() {
 
   const handleGoogle = async () => {
     try {
-      toast.info("Connecting to Google...");
+      toast.info("Welcome to RideNest...");
       await authClient.signIn.social({
         provider: "google",
       });
