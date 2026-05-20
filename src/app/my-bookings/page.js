@@ -76,6 +76,7 @@ export default function MyBookings() {
               key={booking?._id || index}
               className="bg-white p-5 rounded-xl shadow border"
             >
+              
               <h2 className="text-xl font-bold text-[#1E3C5C]">
                 {booking?.carName}
               </h2>

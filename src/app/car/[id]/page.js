@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import Link from "next/link";
 
 export default function CarDetails() {
   const { id } = useParams();
-
+  const [openModal, setOpenModal] = useState(false);
   const [car, setCar] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -121,7 +122,7 @@ export default function CarDetails() {
 
           <p
             className={`mt-2 font-medium ${
-              car?.availability ? "text-green-600" : "text-red-600"
+              car?.availability ? "text-blue-400" : "text-red-400"
             }`}
           >
             {car?.availability ? "Available" : "Not Available"}
@@ -132,55 +133,91 @@ export default function CarDetails() {
           </p>
 
           {/* BOOKING FORM */}
-          <form
-  onSubmit={handleBooking}
-  className="mt-6 border border-gray-300 rounded-xl p-6 bg-white shadow-md"
->
+              {openModal && (
+  <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
 
-  <h2 className="text-xl font-bold text-[#1E3C5C] mb-5">
-    Book This Car
-  </h2>
+    {/* MODAL BOX */}
+    <div className="bg-white w-[92%] max-w-md rounded-2xl shadow-2xl overflow-hidden">
 
-  {/* DRIVER */}
-  <label className="block mb-2 font-semibold text-gray-800">
-    Driver Needed
-  </label>
+      {/* HEADER */}
+      <div className="flex items-center justify-between px-5 py-4 border-b bg-gray-50">
 
-  <select
-    value={driverNeeded}
-    onChange={(e) => setDriverNeeded(e.target.value === "true")}
-    className="w-full p-3 mb-4 border border-gray-300 rounded-lg bg-white text-black
-    focus:outline-none focus:ring-2 focus:ring-[#2A6F8F]"
-  >
-    <option value="false">No</option>
-    <option value="true">Yes</option>
-  </select>
+        <h2 className="text-lg font-bold text-[#1E3C5C]">
+          Book This Car
+        </h2>
 
-  {/* NOTE */}
-  <label className="block mb-2 font-semibold text-gray-800">
-    Special Note
-  </label>
+        <button
+          onClick={() => setOpenModal(false)}
+          className="text-red-400 text-xl font-bold hover:scale-110 transition"
+        >
+          ✕
+        </button>
 
-  <textarea
-    value={note}
-    onChange={(e) => setNote(e.target.value)}
-    className="w-full p-3 mb-4 border border-gray-300 rounded-lg bg-white text-black
-    focus:outline-none focus:ring-2 focus:ring-[#2A6F8F]"
-    placeholder="Example: AC needed, extra luggage, driver behavior..."
-  />
+      </div>
+
+      {/* FORM */}
+      <form onSubmit={handleBooking} className="p-5 space-y-4">
+
+        {/* DRIVER */}
+        <div>
+          <label className="block mb-1 font-semibold text-gray-700">
+            Driver Needed
+          </label>
+
+          <select
+            value={driverNeeded}
+            onChange={(e) =>
+              setDriverNeeded(e.target.value === "true")
+            }
+            className="w-full p-3 border border-gray-300 rounded-lg bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="false">No</option>
+            <option value="true">Yes</option>
+          </select>
+        </div>
+
+        {/* NOTE */}
+        <div>
+          <label className="block mb-1 font-semibold text-gray-700">
+            Special Note
+          </label>
+
+          <textarea
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+            placeholder="Example: AC needed, extra luggage..."
+            className="w-full p-3 border border-gray-300 rounded-lg bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+            rows={4}
+          />
+        </div>
+
+        {/* BUTTON */}
+        <button
+          type="submit"
+          className="w-full py-3 rounded-xl bg-[#1E3C5C] text-white font-semibold hover:bg-blue-800 transition"
+        >
+          <Link href = "/my-bookings">
+          Confirm Booking
+          </Link>
+        </button>
+
+      </form>
+
+    </div>
+  </div>
+)}
 
   {/* BUTTON */}
-  <button
-    type="submit"
-    disabled={bookingLoading}
-    className="w-full py-3 rounded-xl text-white font-semibold
-    bg-gradient-to-r from-[#1E3C5C] to-[#2A6F8F]
-    hover:opacity-90 transition"
-  >
-    {bookingLoading ? "Booking..." : "Book Now"}
-  </button>
+  <button onClick={() => setOpenModal(true)}
+  className="w-full mt-5 py-3 rounded-xl text-white bg-[#1E3C5C]"
+>
+  
+  Book Now
 
-</form>
+  
+</button>
+
+
 
         </div>
       </div>

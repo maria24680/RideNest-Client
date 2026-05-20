@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
 
 export default function RegisterPage() {
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -11,173 +13,190 @@ export default function RegisterPage() {
     password: "",
   });
 
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  // HANDLE INPUT
+  // INPUT CHANGE
   const handleChange = (e) => {
-    const { name, value } = e.target;
-
     setFormData({
       ...formData,
-      [name]: value,
+      [e.target.name]: e.target.value,
     });
   };
 
-  // HANDLE REGISTER
+  // REGISTER
   const handleRegister = async (e) => {
+
     e.preventDefault();
 
     setError("");
+    setLoading(true);
 
     // PASSWORD VALIDATION
     if (formData.password.length < 6) {
+      setLoading(false);
       return setError("Password must be at least 6 characters");
     }
 
     if (!/[A-Z]/.test(formData.password)) {
-      return setError(
-        "Password must contain one uppercase letter"
-      );
+      setLoading(false);
+      return setError("Password must contain one uppercase letter");
     }
 
     if (!/[!@#$%^&*]/.test(formData.password)) {
-      return setError(
-        "Password must contain one special character"
-      );
+      setLoading(false);
+      return setError("Password must contain one special character");
     }
 
     try {
-      console.log(formData);
+
+      const res = await authClient.signUp.email({
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+        image: formData.photo,
+      });
+
+      if (res.error) {
+        setError(res.error.message || "Registration failed");
+        return;
+      }
 
       alert("Registration Successful 🚀");
 
-      // RESET FORM
-      setFormData({
-        name: "",
-        email: "",
-        photo: "",
-        password: "",
-      });
+      window.location.href = "/";
 
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+
+      console.log(err);
+      setError("Something went wrong");
+
+    } finally {
+
+      setLoading(false);
+
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4 py-10">
+    <div className="min-h-screen bg-gradient-to-br from-[#edf6fb] to-[#d7ebf5] flex items-center justify-center px-4 py-8">
 
-      {/* CARD */}
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg border border-gray-200 p-8">
+      <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl p-6 sm:p-8">
 
-        {/* TITLE */}
-        <div className="text-center mb-6">
+        {/* LOGO */}
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-center bg-gradient-to-r from-[#1E3C5C] to-[#2A6F8F] bg-clip-text text-transparent tracking-tight">
+          RIDENEST
+        </h1>
 
-          <h1 className="text-3xl font-bold text-[#1E3C5C]">
-            Create Account
-          </h1>
-
-          <p className="text-gray-600 mt-2">
-            Register to access RideNest
-          </p>
-
-        </div>
+        {/* SUBTITLE */}
+        <p className="text-sm sm:text-base text-center text-gray-600 mt-3 mb-8">
+          Create your account and start renting 🚗
+        </p>
 
         {/* FORM */}
-        <form
-          onSubmit={handleRegister}
-          className="space-y-5"
-        >
+        <form onSubmit={handleRegister} className="space-y-5">
 
-       {/* NAME */}
-<div>
+          {/* NAME */}
+          <div>
 
-  <label className="block mb-2 font-semibold text-gray-700">
-    Full Name
-  </label>
+            <label className="block mb-2 text-sm font-semibold text-gray-700">
+              Full Name
+            </label>
 
-  <input
-    type="text"
-    name="name"
-    placeholder="John Doe"
-    value={formData.name}
-    onChange={handleChange}
-    required
-    className="w-full p-3 border border-gray-300 rounded-xl
-    bg-white text-black placeholder-gray-500
-    focus:outline-none focus:ring-2 focus:ring-[#2A6F8F]"
-  />
+            <input
+              type="text"
+              name="name"
+              placeholder="John Doe"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border border-gray-300 rounded-xl
+              bg-white text-black placeholder-gray-400
+              focus:outline-none focus:ring-2 focus:ring-[#2A6F8F]"
+            />
 
-</div>
+          </div>
 
-{/* EMAIL */}
-<div>
+          {/* EMAIL */}
+          <div>
 
-  <label className="block mb-2 font-semibold text-gray-700">
-    Email
-  </label>
+            <label className="block mb-2 text-sm font-semibold text-gray-700">
+              Email Address
+            </label>
 
-  <input
-    type="email"
-    name="email"
-    placeholder="example@gmail.com"
-    value={formData.email}
-    onChange={handleChange}
-    required
-    className="w-full p-3 border border-gray-300 rounded-xl
-    bg-white text-black placeholder-gray-500
-    focus:outline-none focus:ring-2 focus:ring-[#2A6F8F]"
-  />
+            <input
+              type="email"
+              name="email"
+              placeholder="example@gmail.com"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border border-gray-300 rounded-xl
+              bg-white text-black placeholder-gray-400
+              focus:outline-none focus:ring-2 focus:ring-[#2A6F8F]"
+            />
 
-</div>
+          </div>
 
-{/* PHOTO URL */}
-<div>
+          {/* PHOTO URL */}
+          <div>
 
-  <label className="block mb-2 font-semibold text-gray-700">
-    Photo URL
-  </label>
+            <label className="block mb-2 text-sm font-semibold text-gray-700">
+              Photo URL
+            </label>
 
-  <input
-    type="text"
-    name="photo"
-    placeholder="https://i.ibb.co/example.jpg"
-    value={formData.photo}
-    onChange={handleChange}
-    required
-    className="w-full p-3 border border-gray-300 rounded-xl
-    bg-white text-black placeholder-gray-500
-    focus:outline-none focus:ring-2 focus:ring-[#2A6F8F]"
-  />
+            <input
+              type="text"
+              name="photo"
+              placeholder="https://i.ibb.co/example.jpg"
+              value={formData.photo}
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-xl
+              bg-white text-black placeholder-gray-400
+              focus:outline-none focus:ring-2 focus:ring-[#2A6F8F]"
+            />
 
-</div>
+          </div>
 
-{/* PASSWORD */}
-<div>
+          {/* PASSWORD */}
+          <div>
 
-  <label className="block mb-2 font-semibold text-gray-700">
-    Password
-  </label>
+            <label className="block mb-2 text-sm font-semibold text-gray-700">
+              Password
+            </label>
 
-  <input
-    type="password"
-    name="password"
-    placeholder="Example@123"
-    value={formData.password}
-    onChange={handleChange}
-    required
-    className="w-full p-3 border border-gray-300 rounded-xl
-    bg-white text-black placeholder-gray-500
-    focus:outline-none focus:ring-2 focus:ring-[#2A6F8F]"
-  />
+            <div className="relative">
 
-  
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Example@123"
+                value={formData.password}
+                onChange={handleChange}
+                required
+                className="w-full p-3 border border-gray-300 rounded-xl
+                bg-white text-black placeholder-gray-400
+                focus:outline-none focus:ring-2 focus:ring-[#2A6F8F]"
+              />
 
-</div>
+              {/* SHOW / HIDE */}
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-1/2 -translate-y-1/2
+                text-sm font-medium text-[#2A6F8F]"
+              >
+                {showPassword ? "Hide" : "Show"}
+              </button>
+
+            </div>
+
+          </div>
 
           {/* ERROR */}
           {error && (
-            <p className="text-red-600 font-medium">
+            <p className="text-red-500 text-sm font-medium">
               {error}
             </p>
           )}
@@ -185,23 +204,24 @@ export default function RegisterPage() {
           {/* BUTTON */}
           <button
             type="submit"
+            disabled={loading}
             className="w-full py-3 rounded-xl text-white font-semibold
             bg-gradient-to-r from-[#1E3C5C] to-[#2A6F8F]
-            hover:opacity-90 transition"
+            hover:opacity-90 transition duration-300"
           >
-            Register
+            {loading ? "Creating Account..." : "Register"}
           </button>
 
         </form>
 
         {/* LOGIN */}
-        <p className="text-center text-gray-600 mt-6">
+        <p className="text-center mt-6 text-sm text-gray-600">
 
           Already have an account?{" "}
 
           <Link
             href="/login"
-            className="text-[#2A6F8F] font-semibold hover:underline"
+            className="font-semibold text-[#1E3C5C] hover:underline"
           >
             Login
           </Link>

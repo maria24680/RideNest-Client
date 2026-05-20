@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import React, { useState } from "react";
+import { authClient } from "@/lib/auth-client";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const { data: session } = authClient.useSession();
 
   return (
     <nav className="border-b border-gray-100 sticky top-0 bg-white/95 backdrop-blur-sm z-50 shadow-sm">
@@ -70,13 +72,51 @@ const Navbar = () => {
           </ul>
 
           {/* LOGIN BUTTON */}
-          <div>
-            <button className="px-8 py-2 rounded-full bg-gradient-to-r from-[#1E3C5C] to-[#2A6F8F] text-white text-sm font-semibold shadow-md hover:scale-105 hover:shadow-lg transition duration-300">
-              <Link href="/login">
-  Login
-</Link>
-            </button>
-          </div>
+          {/* AUTH BUTTON */}
+<div>
+
+  {session?.user ? (
+
+    <div className="flex items-center gap-3">
+
+      {/* USER NAME */}
+      <p className="hidden md:block font-semibold text-[#1E3C5C]">
+        {session.user.name}
+      </p>
+      {/* USER IMAGE */}
+<img
+  src={session.user.image}
+  alt="user"
+  className="w-10 h-10 rounded-full object-cover border"
+/>
+
+      {/* LOGOUT */}
+      <button 
+  onClick={async () => {
+    await authClient.signOut();
+    window.location.href = "/login";
+    
+  }}
+        className="px-6 py-2 rounded-full bg-blue-900 text-white text-sm font-semibold shadow-md hover:bg-red-600 transition"
+      >
+        Logout
+      </button>
+
+    </div>
+
+  ) : (
+
+    <button className="px-8 py-2 rounded-full bg-gradient-to-r from-[#1E3C5C] to-[#2A6F8F] text-white text-sm font-semibold shadow-md hover:scale-105 hover:shadow-lg transition duration-300">
+
+      <Link href="/login">
+        Login
+      </Link>
+
+    </button>
+
+  )}
+
+</div>
         </div>
 
         {/* MOBILE MENU */}

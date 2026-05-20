@@ -99,7 +99,7 @@ export default function MyCars() {
 
               <button
                 onClick={() => handleDelete(car._id)}
-                className="bg-red-600 text-white px-3 py-1 rounded"
+                className="bg-red-400 text-white px-3 py-1 rounded"
               >
                 Delete
               </button>
