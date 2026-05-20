@@ -1,69 +1,60 @@
 "use client";
 
-import { useState } from "react";
+const AddCarPage = () => {
 
-export default function AddCar() {
-  const [form, setForm] = useState({
-    name: "",
-    pricePerDay: "",
-    type: "",
-    image: "",
-    seats: "",
-    location: "",
-    description: "",
-    availability: "",
-  });
-
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(form);
-    alert("Car submitted");
+
+    const formData = new FormData(e.currentTarget);
+
+    const car = Object.fromEntries(formData.entries());
+
+    console.log(car);
+
+    const res = await fetch("http://localhost:5000/car", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(car),
+    });
+
+    const data = await res.json();
+
+    console.log(data);
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-5">
       <div className="w-full max-w-2xl bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
 
-        {/* Title */}
         <h1 className="text-3xl font-bold text-[#1E3C5C] mb-6">
           Add New Car
         </h1>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={onSubmit} className="space-y-4">
 
           <input
             name="name"
             placeholder="Car Name"
-            onChange={handleChange}
             className="w-full p-3 border border-gray-400 rounded-lg text-black bg-white focus:outline-none focus:ring-2 focus:ring-[#2A6F8F]"
           />
 
           <input
             name="pricePerDay"
-            type="number"
             placeholder="Daily Rent Price"
-            onChange={handleChange}
             className="w-full p-3 border border-gray-400 rounded-lg text-black bg-white focus:outline-none focus:ring-2 focus:ring-[#2A6F8F]"
           />
 
           <input
             name="type"
             placeholder="Car Type (SUV / Sedan)"
-            onChange={handleChange}
             className="w-full p-3 border border-gray-400 rounded-lg text-black bg-white focus:outline-none focus:ring-2 focus:ring-[#2A6F8F]"
           />
 
           <input
             name="image"
             placeholder="Image URL"
-            onChange={handleChange}
             className="w-full p-3 border border-gray-400 rounded-lg text-black bg-white focus:outline-none focus:ring-2 focus:ring-[#2A6F8F]"
           />
 
@@ -71,36 +62,31 @@ export default function AddCar() {
             name="seats"
             type="number"
             placeholder="Seat Capacity"
-            onChange={handleChange}
             className="w-full p-3 border border-gray-400 rounded-lg text-black bg-white focus:outline-none focus:ring-2 focus:ring-[#2A6F8F]"
           />
 
           <input
             name="location"
             placeholder="Pickup Location"
-            onChange={handleChange}
             className="w-full p-3 border border-gray-400 rounded-lg text-black bg-white focus:outline-none focus:ring-2 focus:ring-[#2A6F8F]"
           />
 
           <textarea
             name="description"
             placeholder="Description"
-            rows="4"
-            onChange={handleChange}
+            rows="2"
             className="w-full p-3 border border-gray-400 rounded-lg text-black bg-white focus:outline-none focus:ring-2 focus:ring-[#2A6F8F]"
           />
 
           <select
-  name="availability"
-  onChange={handleChange}
-  className="w-full p-3 border border-gray-400 rounded-lg text-black bg-white"
->
-  <option value="">Select Availability</option>
-  <option value="true">Available</option>
-  <option value="false">Not Available</option>
-</select>
+            name="availability"
+            className="w-full p-3 border border-gray-400 rounded-lg text-black bg-white"
+          >
+            <option value="">Select Availability</option>
+            <option value="true">Available</option>
+            <option value="false">Not Available</option>
+          </select>
 
-          {/* Button */}
           <button
             type="submit"
             className="w-full py-3 rounded-lg text-white font-semibold
@@ -114,4 +100,6 @@ export default function AddCar() {
       </div>
     </div>
   );
-}
+};
+
+export default AddCarPage;

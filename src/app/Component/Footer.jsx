@@ -80,18 +80,6 @@ const Footer = () => {
                   My Bookings
                 </Link>
               </li>
-              <li>
-                <Link href="/how-it-works" className="text-gray-400 hover:text-white transition text-sm flex items-center gap-2 group">
-                  <span className="w-0 group-hover:w-2 h-0.5 bg-[#2A6F8F] transition-all"></span>
-                  How It Works
-                </Link>
-              </li>
-              <li>
-                <Link href="/faq" className="text-gray-400 hover:text-white transition text-sm flex items-center gap-2 group">
-                  <span className="w-0 group-hover:w-2 h-0.5 bg-[#2A6F8F] transition-all"></span>
-                  FAQ
-                </Link>
-              </li>
             </ul>
           </div>
 
@@ -126,18 +114,7 @@ const Footer = () => {
                   My Added Cars
                 </Link>
               </li>
-              <li>
-                <Link href="/wishlist" className="text-gray-400 hover:text-white transition text-sm flex items-center gap-2 group">
-                  <span className="w-0 group-hover:w-2 h-0.5 bg-[#2A6F8F] transition-all"></span>
-                  Wishlist
-                </Link>
-              </li>
-              <li>
-                <Link href="/terms" className="text-gray-400 hover:text-white transition text-sm flex items-center gap-2 group">
-                  <span className="w-0 group-hover:w-2 h-0.5 bg-[#2A6F8F] transition-all"></span>
-                  Terms & Conditions
-                </Link>
-              </li>
+              
             </ul>
           </div>
 
