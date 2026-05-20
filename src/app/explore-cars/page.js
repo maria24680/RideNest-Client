@@ -9,28 +9,25 @@ export default function ExploreCars() {
   const [search, setSearch] = useState("");
   const [type, setType] = useState("");
 
-  // FETCH CARS
-  const fetchCars = async () => {
-    try {
-      setLoading(true);
-
-      const res = await fetch("http://localhost:5000/car");
-      const data = await res.json();
-
-      setCars(Array.isArray(data) ? data : []);
-    } catch (error) {
-      console.log(error);
-      setCars([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchCars = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch("http://localhost:5000/car");
+        const data = await res.json();
+
+        setCars(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error("Error fetching cars:", error);
+        setCars([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchCars();
   }, []);
 
-  // SEARCH + FILTER
   const filteredCars = useMemo(() => {
     return cars.filter((car) => {
       const matchSearch = car?.name
@@ -43,7 +40,6 @@ export default function ExploreCars() {
     });
   }, [cars, search, type]);
 
-  // LOADING UI
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -56,8 +52,6 @@ export default function ExploreCars() {
 
   return (
     <div className="min-h-screen bg-gray-100 px-5 py-10">
-
-      {/* TITLE */}
       <div className="text-center mb-10">
         <h1 className="text-4xl font-bold text-[#1E3C5C]">
           Explore Cars
@@ -67,36 +61,30 @@ export default function ExploreCars() {
         </p>
       </div>
 
-      {/* SEARCH + FILTER */}
-       {/* SEARCH + FILTER */}
-<div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-4 mb-8">
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-4 mb-8">
+        <input
+          type="text"
+          placeholder="Search car name..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="flex-1 w-full p-3 border border-gray-300 rounded-xl bg-white text-black"
+        />
 
-  <input
-    type="text"
-    placeholder="Search car name..."
-    value={search}
-    onChange={(e) => setSearch(e.target.value)}
-    className="flex-1 w-full p-3 border border-gray-300 rounded-xl bg-white text-black"
-  />
+        <div className="w-full sm:w-full md:w-56">
+          <select
+            value={type}
+            onChange={(e) => setType(e.target.value)}
+            className="w-full p-3 border border-gray-300 rounded-xl bg-white text-black text-sm sm:text-base"
+          >
+            <option value="">All Types</option>
+            <option value="SUV">SUV</option>
+            <option value="Sedan">Sedan</option>
+            <option value="Luxury">Luxury</option>
+          </select>
+        </div>
+      </div>
 
-  <div className="w-full sm:w-full md:w-56">
-  <select
-    value={type}
-    onChange={(e) => setType(e.target.value)}
-    className="w-full p-3 border border-gray-300 rounded-xl bg-white text-black text-sm sm:text-base"
-  >
-    <option value="">All Types</option>
-    <option value="SUV">SUV</option>
-    <option value="Sedan">Sedan</option>
-    <option value="Luxury">Luxury</option>
-  </select>
-</div>
-
-</div>
-
-      {/* CAR GRID */}
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
-
         {filteredCars.map((car, index) => {
           const isAvailable =
             car?.availability === true ||
@@ -105,48 +93,40 @@ export default function ExploreCars() {
           return (
             <div
               key={car?._id || index}
-              className="relative z-1 bg-white rounded-2xl shadow-md border"
+              className="relative z-1 bg-white rounded-2xl shadow-md border border-gray-200"
             >
-
-              {/* IMAGE */}
               <img
-                src={car?.image}
-                alt={car?.name}
-                className="h-56 w-full object-cover"
+                src={car?.image || "https://placehold.co/600x400?text=No+Image"}
+                alt={car?.name || "Car"}
+                className="h-56 w-full object-cover rounded-t-2xl"
               />
 
-              {/* CONTENT */}
               <div className="p-5">
-
                 <h2 className="text-xl font-bold text-[#1E3C5C]">
-                  {car?.name}
+                  {car?.name || "Unknown Car"}
                 </h2>
 
-                <p className="text-gray-600">
-                  Type: {car?.type}
+                <p className="text-gray-600 mt-1">
+                  Type: {car?.type || "N/A"}
                 </p>
 
                 <p className="text-gray-600">
-                  Location: {car?.location}
+                  Location: {car?.location || "N/A"}
                 </p>
 
-
-                {/* AVAILABILITY */}
                 <p
                   className={`mt-2 font-medium ${
-                    isAvailable ? "text-blue-400" : "text-red-400"
+                    isAvailable ? "text-blue-500" : "text-red-500"
                   }`}
                 >
                   {isAvailable ? "Available" : "Not Available"}
                 </p>
 
-                {/* VIEW DETAILS */}
                 <Link href={`/car/${car?._id}`}>
-                  <button className="w-full mt-3 py-2 bg-[#1E3C5C] text-white rounded hover:opacity-90 transition">
+                  <button className="w-full mt-4 py-2 bg-[#1E3C5C] text-white rounded-lg hover:bg-[#16324d] transition-colors font-medium">
                     View Details
                   </button>
                 </Link>
-
               </div>
             </div>
           );

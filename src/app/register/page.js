@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function RegisterPage() {
 
@@ -11,6 +13,7 @@ export default function RegisterPage() {
     email: "",
     photo: "",
     password: "",
+    callbackURL: "/login",
   });
 
   const [showPassword, setShowPassword] = useState(false);
@@ -63,27 +66,34 @@ export default function RegisterPage() {
         return;
       }
 
-      alert("Registration Successful 🚀");
+      toast.success("Signup Successfully");
+            setTimeout(() => {
+              window.location.href = "/login";
+            }, 1500);
+          } catch (err) {
+            toast.error(err?.message || "Something went wrong");
+          } finally {
+            setLoading(false);
+          }
+        };
+      
 
-      window.location.href = "/";
-
-    } catch (err) {
-
-      console.log(err);
-      setError("Something went wrong");
-
-    } finally {
-
-      setLoading(false);
-
-    }
-  };
+   const handleGoogle = async () => {
+      try {
+        toast.info("Connecting to Google...");
+        await authClient.signIn.social({
+          provider: "google",
+        });
+      } catch (err) {
+        toast.error("Google login failed!");
+      }
+    };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#edf6fb] to-[#d7ebf5] flex items-center justify-center px-4 py-8">
 
       <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl p-6 sm:p-8">
-
+        <ToastContainer position="top-right" autoClose={2000} />
         {/* LOGO */}
         <h1 className="text-3xl sm:text-4xl font-extrabold text-center bg-gradient-to-r from-[#1E3C5C] to-[#2A6F8F] bg-clip-text text-transparent tracking-tight">
           RIDENEST
@@ -209,10 +219,29 @@ export default function RegisterPage() {
             bg-gradient-to-r from-[#1E3C5C] to-[#2A6F8F]
             hover:opacity-90 transition duration-300"
           >
-            {loading ? "Creating Account..." : "Register"}
+            {loading ? "Creating Account..." : "CREATE A ACCOUNT"}
           </button>
 
         </form>
+
+         <div className="relative flex py-5 items-center">
+          <div className="flex-grow border-t border-gray-300"></div>
+          <span className="flex-shrink mx-4 text-gray-400 text-sm">or</span>
+          <div className="flex-grow border-t border-gray-300"></div>
+        </div>
+
+        <button
+          onClick={handleGoogle}
+          type="button"
+          className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-xl border border-gray-300 bg-white text-gray-800 shadow-sm hover:bg-gray-50 dependency-focus transition duration-200"
+        >
+          <img 
+            className="w-4 h-auto" 
+            src="https://www.svgrepo.com/show/475656/google-color.svg" 
+            alt="Google Logo" 
+          />
+          Sign up with Google Profile
+        </button>
 
         {/* LOGIN */}
         <p className="text-center mt-6 text-sm text-gray-600">
@@ -223,7 +252,7 @@ export default function RegisterPage() {
             href="/login"
             className="font-semibold text-[#1E3C5C] hover:underline"
           >
-            Login
+            Sign In
           </Link>
 
         </p>

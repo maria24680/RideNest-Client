@@ -55,18 +55,8 @@ const Hero = () => {
                 height={400}
                 className="rounded-2xl shadow-2xl object-cover"
               />
-              {/* Floating badge */}
-              <div className="absolute -bottom-5 -left-5 bg-white rounded-xl shadow-lg p-3 flex items-center gap-2">
-                <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                  <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-xs text-gray-500">500+</p>
-                  <p className="text-sm font-bold text-gray-800">Happy Customers</p>
-                </div>
-              </div>
+              
+              
             </div>
           </div>
         </div>
