@@ -88,7 +88,7 @@ export default function MyBookings() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center text-black">
-        Loading booking...
+        Loading bookings...
       </div>
     );
   }
