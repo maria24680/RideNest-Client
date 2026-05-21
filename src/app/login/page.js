@@ -5,6 +5,7 @@ import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Image from "next/image";
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
@@ -52,6 +53,8 @@ export default function LoginPage() {
       toast.info("Welcome to RideNest...");
       await authClient.signIn.social({
         provider: "google",
+        
+
       });
     } catch (err) {
       toast.error("Google login failed!");
@@ -59,7 +62,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#edf6fb] to-[#d7ebf5] flex items-center justify-center px-4 py-8">
+    <div className="min-h-screen bg-linear-to-br from-[#edf6fb] to-[#d7ebf5] flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl p-6 sm:p-8">
         <ToastContainer position="top-right" autoClose={2000} />
         
@@ -131,7 +134,9 @@ export default function LoginPage() {
           type="button"
           className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-xl border border-gray-300 bg-white text-gray-800 shadow-sm hover:bg-gray-50 dependency-focus transition duration-200"
         >
-          <img 
+          <Image
+          width={40}
+          height={40}
             className="w-4 h-auto" 
             src="https://www.svgrepo.com/show/475656/google-color.svg" 
             alt="Google Logo" 
