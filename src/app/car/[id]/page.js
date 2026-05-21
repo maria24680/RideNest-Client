@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Image from "next/image";
 
 export default function CarDetails() {
   const { id } = useParams();
@@ -106,7 +107,9 @@ export default function CarDetails() {
       <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow overflow-hidden">
         
         {/* IMAGE */}
-        <img
+        <Image
+        width={400}
+        height={400}
           src={car?.image}
           alt={car?.name}
           className="w-full h-80 object-cover"

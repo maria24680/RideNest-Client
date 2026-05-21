@@ -12,6 +12,10 @@ export default function MyCars() {
   const [showModal, setShowModal] = useState(false);
   const [selectedCar, setSelectedCar] = useState(null);
   const [updatedPrice, setUpdatedPrice] = useState("");
+  const [updatedDescription, setUpdatedDescription] = useState("");
+  const [updatedAvailability, setUpdatedAvailability] = useState(true);
+  const [updatedImage, setUpdatedImage] = useState("");
+  const [updatedType, setUpdatedType] = useState("");
   const [updatedLocation, setUpdatedLocation] = useState("");
 
   // DELETE MODAL STATES
@@ -44,7 +48,12 @@ export default function MyCars() {
   const openUpdateModal = (car) => {
     setSelectedCar(car);
     setUpdatedPrice(car.pricePerDay);
+    setUpdatedDescription(car.description);
+     setUpdatedAvailability(car.availability);
+       setUpdatedImage(car.image);
+         setUpdatedType(car.type);
     setUpdatedLocation(car.location);
+    
     setShowModal(true);
   };
 
@@ -231,6 +240,46 @@ export default function MyCars() {
                   placeholder="Price Per Day"
                   className="w-full border border-gray-300 rounded-lg p-3 text-black placeholder:text-gray-500 outline-none focus:ring-2 focus:ring-blue-500"
                 />
+
+                <textarea
+                 value={updatedDescription}
+                 onChange={(e) =>
+                 setUpdatedDescription(e.target.value)
+                          }
+                placeholder="Description"
+                rows={4}
+                 className="w-full border border-gray-300 rounded-lg p-3 text-black placeholder:text-gray-500 outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+
+                  <select
+  value={updatedAvailability}
+  onChange={(e) =>
+    setUpdatedAvailability(e.target.value === "true")
+  }
+  className="w-full border border-gray-300 rounded-lg p-3 text-black placeholder:text-gray-500 outline-none focus:ring-2 focus:ring-blue-500"
+>
+  <option value="true">Available</option>
+  <option value="false">Not Available</option>
+</select>
+
+<input
+  type="text"
+  value={updatedImage}
+  onChange={(e) => setUpdatedImage(e.target.value)}
+  placeholder="Image URL"
+  className="w-full border border-gray-300 rounded-lg p-3 text-black placeholder:text-gray-500 outline-none focus:ring-2 focus:ring-blue-500"
+/>
+
+                  <input
+                   type="text"
+                   value={updatedType}
+                   onChange={(e) => setUpdatedType(e.target.value)}
+                  placeholder="Type"
+                  className="w-full border border-gray-300 rounded-lg p-3 text-black placeholder:text-gray-500 outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+
+                  
+
 
                 <input
                   type="text"

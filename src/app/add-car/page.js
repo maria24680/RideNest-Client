@@ -1,7 +1,12 @@
 "use client";
 
-const AddCarPage = () => {
 
+
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+
+const AddCarPage = () => {
+const router = useRouter();
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -20,6 +25,8 @@ const AddCarPage = () => {
     });
 
     const data = await res.json();
+toast.success(`${data.name} added Succefully`)
+router.push('/my-cars')
 
     console.log(data);
   };
@@ -90,7 +97,7 @@ const AddCarPage = () => {
           <button
             type="submit"
             className="w-full py-3 rounded-lg text-white font-semibold
-            bg-gradient-to-r from-[#1E3C5C] to-[#2A6F8F]
+            bg-linear-to-r from-[#1E3C5C] to-[#2A6F8F]
             hover:opacity-90 transition shadow-md"
           >
             Add Car
