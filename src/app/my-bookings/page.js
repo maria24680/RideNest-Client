@@ -1,91 +1,93 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function MyBookings() {
+  const { data: session } = authClient.useSession();
+
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // DELETE MODAL STATES
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectedBookingId, setSelectedBookingId] = useState(null);
 
-  // FETCH BOOKINGS
   useEffect(() => {
+    if (!session?.user?.email) return;
+
     const fetchBookings = async () => {
       try {
         setLoading(true);
 
+        const { data: tokenData } = await authClient.token();
+
         const res = await fetch(
-          "http://localhost:5000/bookings"
+          `http://localhost:5000/bookings?email=${session?.user?.email}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              authorization: `Bearer ${tokenData?.token}`,
+            },
+          }
         );
+
+        if (!res.ok) throw new Error("Failed");
 
         const data = await res.json();
 
         setBookings(Array.isArray(data) ? data : []);
       } catch (error) {
-        console.error(
-          "Error fetching bookings:",
-          error
-        );
-
-        toast.error("Failed to load bookings ❌");
+        console.error(error);
+        toast.error("Failed to load bookings");
       } finally {
         setLoading(false);
       }
     };
 
     fetchBookings();
-  }, []);
+  }, [session]);
 
-  // DELETE BOOKING
   const handleDelete = async () => {
     if (!selectedBookingId) return;
 
     try {
+      const { data: tokenData } = await authClient.token();
+
       const res = await fetch(
         `http://localhost:5000/bookings/${selectedBookingId}`,
         {
           method: "DELETE",
+          headers: {
+            authorization: `Bearer ${tokenData?.token}`,
+          },
         }
       );
 
       const data = await res.json();
 
       if (data.deletedCount > 0) {
-        toast.success(
-          "Booking deleted successfully ✅"
-        );
+        toast.success("Booking deleted successfully");
 
-        setBookings((prevBookings) =>
-          prevBookings.filter(
-            (booking) =>
-              booking._id !== selectedBookingId
-          )
+        setBookings((prev) =>
+          prev.filter((b) => b._id !== selectedBookingId)
         );
 
         setDeleteModal(false);
       } else {
-        toast.error("Something went wrong ❌");
+        toast.error("Delete failed");
       }
     } catch (error) {
-      console.error(
-        "Error deleting booking:",
-        error
-      );
-
-      toast.error(
-        "Server error while deleting ❌"
-      );
+      console.error(error);
+      toast.error("Server error");
     }
   };
 
-  // LOADING
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center font-medium text-gray-600">
+      <div className="min-h-screen flex items-center justify-center text-black">
         Loading bookings...
       </div>
     );
@@ -93,83 +95,54 @@ export default function MyBookings() {
 
   return (
     <>
-      {/* TOASTIFY */}
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-      />
+      <ToastContainer />
 
-      <div className="min-h-screen bg-gray-100 p-6">
-        
-        {/* TITLE */}
-        <h1 className="text-3xl font-bold text-center text-[#1E3C5C] mb-8">
+      <div className="min-h-screen bg-gray-100 p-6 text-black">
+        <h1 className="text-3xl font-bold text-center mb-8 text-black">
           My Bookings
         </h1>
 
-        {/* EMPTY */}
         {bookings.length === 0 ? (
-          <div className="text-center text-gray-600 font-medium">
+          <p className="text-center text-black">
             No bookings found
-          </div>
+          </p>
         ) : (
-          <div className="max-w-5xl mx-auto grid gap-5">
-            
-            {bookings.map((booking, index) => (
+          <div className="max-w-4xl mx-auto space-y-4">
+            {bookings.map((b) => (
               <div
-                key={booking?._id || index}
-                className="bg-white p-5 rounded-xl shadow border border-gray-200 hover:shadow-md transition-shadow"
+                key={b._id}
+                className="bg-white p-4 rounded-xl shadow text-black"
               >
-                
-                {/* BOOKING INFO */}
-                <h2 className="text-xl font-bold text-[#1E3C5C]">
-                  {booking?.carName ||
-                    "Unknown Car"}
+                <h2 className="text-xl font-bold text-black">
+                  {b.carName}
                 </h2>
 
-                <p className="text-gray-700 mt-1">
-                  Price: ৳
-                  {booking?.pricePerDay ||
-                    "N/A"}
+                <p className="text-black">
+                  Price: {b.pricePerDay}
                 </p>
 
-                <p className="text-gray-700">
-                  Booking Date:{" "}
-                  {booking?.bookingDate
-                    ? new Date(
-                        booking.bookingDate
-                      ).toLocaleDateString()
-                    : "N/A"}
+                <p className="text-black">
+                  Date:{" "}
+                  {new Date(b.bookingDate).toLocaleDateString()}
                 </p>
 
-                <p className="text-gray-700">
-                  Driver Needed:{" "}
-                  {booking?.driverNeeded
-                    ? "Yes"
-                    : "No"}
+                <p className="text-black">
+                  Driver: {b.driverNeeded ? "Yes" : "No"}
                 </p>
 
-                <p className="text-gray-500 mt-2 italic text-sm">
-                  Note:{" "}
-                  {booking?.note || "No note"}
+                <p className="text-black">
+                  Note: {b.note}
                 </p>
 
-                {/* DELETE BUTTON */}
-                <div className="flex gap-3 mt-5">
-                  
-                  <button
-                    onClick={() => {
-                      setSelectedBookingId(
-                        booking?._id
-                      );
-
-                      setDeleteModal(true);
-                    }}
-                    className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors"
-                  >
-                    Delete
-                  </button>
-
-                </div>
+                <button
+                  onClick={() => {
+                    setSelectedBookingId(b._id);
+                    setDeleteModal(true);
+                  }}
+                  className="mt-3 bg-red-500 text-white px-4 py-2 rounded"
+                >
+                  Delete
+                </button>
               </div>
             ))}
           </div>
@@ -177,37 +150,26 @@ export default function MyBookings() {
 
         {/* DELETE MODAL */}
         {deleteModal && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
-            
-            <div className="bg-white w-full max-w-sm rounded-2xl p-6 shadow-xl">
-              
-              <h2 className="text-2xl font-bold text-gray-800 mb-3">
-                Delete Booking
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
+            <div className="bg-white p-6 rounded-xl text-black">
+              <h2 className="text-xl mb-4">
+                Delete this booking?
               </h2>
 
-              <p className="text-gray-600">
-                Are you sure you want to delete
-                this booking?
-              </p>
-
-              <div className="flex justify-end gap-3 mt-6">
-                
+              <div className="flex gap-3">
                 <button
-                  onClick={() =>
-                    setDeleteModal(false)
-                  }
-                  className="px-4 py-2 rounded-lg bg-gray-300 hover:bg-gray-400 transition"
+                  onClick={() => setDeleteModal(false)}
+                  className="px-4 py-2 bg-gray-300"
                 >
                   Cancel
                 </button>
 
                 <button
                   onClick={handleDelete}
-                  className="px-4 py-2 rounded-lg bg-red-400 text-white hover:bg-red-600 transition"
+                  className="px-4 py-2 bg-red-500 text-white"
                 >
                   Delete
                 </button>
-
               </div>
             </div>
           </div>

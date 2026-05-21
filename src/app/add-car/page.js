@@ -1,34 +1,54 @@
 "use client";
 
-
-
+import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 const AddCarPage = () => {
-const router = useRouter();
+  const router = useRouter();
+
+  const { data: session } = authClient.useSession();
+
   const onSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
 
-    const car = Object.fromEntries(formData.entries());
+    const car = {
+      ...Object.fromEntries(formData.entries()),
+      userEmail: session?.user?.email,
+    };
 
-    console.log(car);
+    try {
+      const { data: tokenData } =
+        await authClient.token();
 
-    const res = await fetch("http://localhost:5000/car", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(car),
-    });
+      const res = await fetch(
+        `http://localhost:5000/car?email=${session?.user?.email}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${tokenData?.token}`,
+          },
+          body: JSON.stringify(car),
+        }
+      );
 
-    const data = await res.json();
-toast.success(`${data.name} added Succefully`)
-router.push('/my-cars')
+      const data = await res.json();
 
-    console.log(data);
+      if (res.ok) {
+        toast.success("Car added successfully");
+
+        router.push("/my-cars");
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+
+      toast.error("Failed to add car");
+    }
   };
 
   return (

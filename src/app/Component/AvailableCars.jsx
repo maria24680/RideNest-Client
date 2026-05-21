@@ -61,7 +61,9 @@ useEffect(() => {
                             key={car?._id}
                             className="bg-white rounded-2xl shadow-md border border-gray-200 overflow-hidden"
                           >
-                            <img
+                            <Image
+                            width={400}
+                            height={400}
                               src={car?.image || "https://placehold.co/600x400?text=No+Image"}
                               alt={car?.name || "Car"}
                               className="h-56 w-full object-cover"

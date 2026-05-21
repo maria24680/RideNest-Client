@@ -5,6 +5,7 @@ import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Image from "next/image";
 
 export default function RegisterPage() {
 
@@ -235,7 +236,9 @@ export default function RegisterPage() {
           type="button"
           className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-xl border border-gray-300 bg-white text-gray-800 shadow-sm hover:bg-gray-50 dependency-focus transition duration-200"
         >
-          <img 
+          <Image
+          height={40}
+          width={40}
             className="w-4 h-auto" 
             src="https://www.svgrepo.com/show/475656/google-color.svg" 
             alt="Google Logo" 

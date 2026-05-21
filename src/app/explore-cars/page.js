@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 "use client";
 
 import Image from "next/image";
@@ -112,7 +113,10 @@ export default function ExploreCars() {
                 key={car._id}
                 className="bg-white rounded-xl shadow border overflow-hidden"
               >
-                <img
+                <Image
+                alt="car image"
+                height={400}
+                width={400}
                   src={
                     car.image || "https://placehold.co/600x400?text=No+Image"
                   }

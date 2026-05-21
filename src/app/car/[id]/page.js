@@ -5,38 +5,116 @@ import { useParams, useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
+import { authClient } from "@/lib/auth-client";
 
 export default function CarDetails() {
   const { id } = useParams();
+
   const router = useRouter();
 
-  const [openModal, setOpenModal] = useState(false);
+  const {
+    data: session,
+    isPending,
+  } = authClient.useSession();
+
+  const [openModal, setOpenModal] =
+    useState(false);
+
   const [car, setCar] = useState(null);
-  const [loading, setLoading] = useState(true);
 
-  const [driverNeeded, setDriverNeeded] = useState(false);
+  const [loading, setLoading] =
+    useState(true);
+
+  const [driverNeeded, setDriverNeeded] =
+    useState(false);
+
   const [note, setNote] = useState("");
-  const [bookingLoading, setBookingLoading] = useState(false);
 
-  // FETCH CAR - defined inside useEffect
+  const [bookingLoading, setBookingLoading] =
+    useState(false);
+
+  // FETCH CAR
   useEffect(() => {
+    // WAIT FOR SESSION
+    if (isPending) return;
+
+    // USER NOT LOGGED IN
+    if (!session) {
+      toast.error("Please login first");
+
+      router.push("/login");
+
+      return;
+    }
+
     if (!id) return;
-    
+
     const fetchCar = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/car/${id}`);
-        const data = await res.json();
-        setCar(data);
+        setLoading(true);
+
+        // GET TOKEN
+        const { data } =
+          await authClient.token();
+
+        const token = data?.token;
+
+        if (!token) {
+          throw new Error(
+            "No token found"
+          );
+        }
+
+        console.log("TOKEN:", token);
+
+        const res = await fetch(
+          `http://localhost:5000/car/${id}`,
+          {
+            method: "GET",
+
+            headers: {
+              "Content-Type":
+                "application/json",
+
+              authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const result =
+          await res.json();
+
+        console.log(result);
+
+        if (!res.ok) {
+          throw new Error(
+            result?.message ||
+              "Failed to fetch car"
+          );
+        }
+
+        setCar(result);
       } catch (error) {
         console.log(error);
+
+        toast.error(
+          error.message ||
+            "Failed to load car details"
+        );
+
         setCar(null);
       } finally {
         setLoading(false);
       }
     };
-    
+
     fetchCar();
-  }, [id]); // No ESLint warning now
+  }, [
+    id,
+    session,
+    isPending,
+    router,
+  ]);
 
   // BOOKING
   const handleBooking = async (e) => {
@@ -45,44 +123,82 @@ export default function CarDetails() {
     try {
       setBookingLoading(true);
 
-      const res = await fetch("http://localhost:5000/bookings", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
-          carId: car?._id,
-          carName: car?.name,
-          pricePerDay: car?.pricePerDay,
-          driverNeeded,
-          note,
-          bookingDate: new Date(),
-        }),
-      });
+      const { data } =
+        await authClient.token();
+
+      const token = data?.token;
+
+      const res = await fetch(
+        "http://localhost:5000/bookings",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json",
+
+            authorization: `Bearer ${token}`,
+          },
+
+          body: JSON.stringify({
+            carId: car?._id,
+
+            carName: car?.name,
+
+            pricePerDay:
+              car?.pricePerDay,
+
+            driverNeeded,
+
+            note,
+
+            bookingDate:
+              new Date(),
+
+            userEmail:
+              session?.user?.email,
+          }),
+        }
+      );
+
+      const result =
+        await res.json();
 
       if (res.ok) {
-        toast.success("Booking Successful 🚗");
+        toast.success(
+          "Booking Successful"
+        );
 
         setDriverNeeded(false);
+
         setNote("");
+
         setOpenModal(false);
 
         setTimeout(() => {
-          router.push("/my-bookings");
+          router.push(
+            "/my-bookings"
+          );
         }, 1500);
       } else {
-        toast.error("Booking Failed ❌");
+        toast.error(
+          result?.message ||
+            "Booking Failed"
+        );
       }
     } catch (error) {
       console.log(error);
-      toast.error("Something went wrong ❌");
+
+      toast.error(
+        "Something went wrong"
+      );
     } finally {
       setBookingLoading(false);
     }
   };
 
-  // LOADING
-  if (loading) {
+  // SESSION LOADING
+  if (isPending || loading) {
     return (
       <div className="min-h-screen flex items-center justify-center text-xl font-semibold">
         Loading...
@@ -90,7 +206,7 @@ export default function CarDetails() {
     );
   }
 
-  // NOT FOUND
+  // CAR NOT FOUND
   if (!car) {
     return (
       <div className="min-h-screen flex items-center justify-center text-xl font-semibold">
@@ -101,40 +217,44 @@ export default function CarDetails() {
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-      <ToastContainer position="top-right" autoClose={2000} />
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+      />
 
-      {/* CARD */}
       <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow overflow-hidden">
-        
-        {/* IMAGE */}
+
         <Image
-        width={400}
-        height={400}
-          src={car?.image}
+          width={800}
+          height={500}
+          src={
+            car?.image ||
+            "https://placehold.co/800x500"
+          }
           alt={car?.name}
           className="w-full h-80 object-cover"
         />
 
-        {/* DETAILS */}
         <div className="p-6">
           <h1 className="text-3xl font-bold text-[#1E3C5C]">
             {car?.name}
           </h1>
 
           <p className="mt-2 text-gray-700">
-            Type: {car?.type || "N/A"}
+            Type: {car?.type}
           </p>
 
           <p className="text-gray-700">
-            Seats: {car?.seats || "N/A"}
+            Seats: {car?.seats}
           </p>
 
           <p className="text-gray-700">
-            Location: {car?.location || "N/A"}
+            Location: {car?.location}
           </p>
 
           <p className="text-gray-700">
-            Price: ৳{car?.pricePerDay}/day
+            Price: ৳
+            {car?.pricePerDay}/day
           </p>
 
           <p
@@ -144,16 +264,19 @@ export default function CarDetails() {
                 : "text-red-500"
             }`}
           >
-            {car?.availability ? "Available" : "Not Available"}
+            {car?.availability
+              ? "Available"
+              : "Not Available"}
           </p>
 
           <p className="mt-4 text-gray-600">
-            {car?.description || "No description available"}
+            {car?.description}
           </p>
 
-          {/* BOOK BUTTON */}
           <button
-            onClick={() => setOpenModal(true)}
+            onClick={() =>
+              setOpenModal(true)
+            }
             className="w-full mt-6 py-3 rounded-xl bg-[#1E3C5C] text-white font-semibold hover:bg-blue-900 transition"
           >
             Book Now
@@ -164,31 +287,29 @@ export default function CarDetails() {
       {/* MODAL */}
       {openModal && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 px-4">
-          
-          {/* MODAL BOX */}
+
           <div className="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden">
-            
-            {/* HEADER */}
+
             <div className="flex items-center justify-between px-5 py-4 border-b bg-gray-50">
               <h2 className="text-xl font-bold text-[#1E3C5C]">
                 Book This Car
               </h2>
 
               <button
-                onClick={() => setOpenModal(false)}
-                className="text-red-500 text-2xl font-bold hover:scale-110 transition"
+                onClick={() =>
+                  setOpenModal(false)
+                }
+                className="text-red-500 text-2xl font-bold"
               >
-                ✕
+                ×
               </button>
             </div>
 
-            {/* FORM */}
             <form
               onSubmit={handleBooking}
               className="p-5 space-y-4"
             >
-              
-              {/* DRIVER */}
+
               <div>
                 <label className="block mb-2 font-semibold text-gray-700">
                   Driver Needed
@@ -197,16 +318,23 @@ export default function CarDetails() {
                 <select
                   value={driverNeeded}
                   onChange={(e) =>
-                    setDriverNeeded(e.target.value === "true")
+                    setDriverNeeded(
+                      e.target.value ===
+                        "true"
+                    )
                   }
-                  className="w-full p-3 border border-gray-300 rounded-lg bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-3 border border-gray-300 rounded-lg bg-white text-black"
                 >
-                  <option value="false">No</option>
-                  <option value="true">Yes</option>
+                  <option value="false">
+                    No
+                  </option>
+
+                  <option value="true">
+                    Yes
+                  </option>
                 </select>
               </div>
 
-              {/* NOTE */}
               <div>
                 <label className="block mb-2 font-semibold text-gray-700">
                   Special Note
@@ -214,17 +342,21 @@ export default function CarDetails() {
 
                 <textarea
                   value={note}
-                  onChange={(e) => setNote(e.target.value)}
-                  placeholder="Example: AC needed, extra luggage..."
+                  onChange={(e) =>
+                    setNote(
+                      e.target.value
+                    )
+                  }
                   rows={4}
-                  className="w-full p-3 border border-gray-300 rounded-lg bg-white text-black placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-3 border border-gray-300 rounded-lg bg-white text-black"
                 />
               </div>
 
-              {/* SUBMIT BUTTON */}
               <button
                 type="submit"
-                disabled={bookingLoading}
+                disabled={
+                  bookingLoading
+                }
                 className="w-full py-3 rounded-xl bg-[#1E3C5C] text-white font-semibold hover:bg-blue-800 transition disabled:opacity-50"
               >
                 {bookingLoading

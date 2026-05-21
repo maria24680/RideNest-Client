@@ -13,6 +13,7 @@ import {
   useRouter,
   usePathname,
 } from "next/navigation";
+import Image from "next/image";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -144,7 +145,9 @@ const Navbar = () => {
                   {session.user.name}
                 </p>
 
-                <img
+                <Image
+                height={40}
+                width={40}
                   src={
                     session.user.image ||
                     "https://placehold.co/100?text=User"

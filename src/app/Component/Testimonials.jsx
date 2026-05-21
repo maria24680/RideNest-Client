@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import {
   FaStar,
@@ -216,7 +217,9 @@ const Testimonials = () => {
               <div className="flex items-center gap-4">
 
                 {/* IMAGE */}
-                <img
+                <Image
+                height={40}
+                width={40}
                   src={testimonial.image}
                   alt={testimonial.name}
                   className="w-14 h-14 rounded-full object-cover border-2 border-[#2A6F8F]"
