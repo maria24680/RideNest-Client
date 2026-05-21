@@ -24,7 +24,7 @@ export default function MyBookings() {
         const { data: tokenData } = await authClient.token();
 
         const res = await fetch(
-          `http://localhost:5000/bookings?email=${session?.user?.email}`,
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/bookings?email=${session?.user?.email}`,
           {
             method: "GET",
             headers: {
@@ -57,7 +57,7 @@ export default function MyBookings() {
       const { data: tokenData } = await authClient.token();
 
       const res = await fetch(
-        `http://localhost:5000/bookings/${selectedBookingId}`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/bookings/${selectedBookingId}`,
         {
           method: "DELETE",
           headers: {

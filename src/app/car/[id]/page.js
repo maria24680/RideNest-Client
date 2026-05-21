@@ -68,7 +68,7 @@ export default function CarDetails() {
         console.log("TOKEN:", token);
 
         const res = await fetch(
-          `http://localhost:5000/car/${id}`,
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/car/${id}`,
           {
             method: "GET",
 
@@ -129,7 +129,7 @@ export default function CarDetails() {
       const token = data?.token;
 
       const res = await fetch(
-        "http://localhost:5000/bookings",
+        "${process.env.NEXT_PUBLIC_SERVER_URL}/bookings",
         {
           method: "POST",
 

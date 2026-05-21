@@ -36,7 +36,7 @@ export default function MyCars() {
         const { data: tokenData } = await authClient.token();
 
         const res = await fetch(
-          `http://localhost:5000/car?email=${session?.user?.email}`,
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/car?email=${session?.user?.email}`,
           {
             headers: {
               authorization: `Bearer ${tokenData?.token}`,
@@ -77,7 +77,7 @@ export default function MyCars() {
       const { data: tokenData } = await authClient.token();
 
       const res = await fetch(
-        `http://localhost:5000/car/${selectedCar._id}`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/car/${selectedCar._id}`,
         {
           method: "PATCH",
           headers: {
@@ -122,7 +122,7 @@ export default function MyCars() {
       const { data: tokenData } = await authClient.token();
 
       const res = await fetch(
-        `http://localhost:5000/car/${deleteId}`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/car/${deleteId}`,
         {
           method: "DELETE",
           headers: {

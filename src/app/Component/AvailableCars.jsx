@@ -11,7 +11,7 @@ export default function AvailableCars() {
 
 useEffect(() => {
 
-  fetch("http://localhost:5000/car?limit=6")
+  fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/car?limit=6`)
     .then((res) => res.json())
     .then((data) => {
 

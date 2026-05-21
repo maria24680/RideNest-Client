@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+ process.env.NEXT_PUBLIC_SERVER_URL;
 
 export default function ExploreCars() {
   const [cars, setCars] = useState([]);
