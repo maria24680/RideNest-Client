@@ -3,23 +3,19 @@
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { authClient } from "@/lib/auth-client";
-
 import {
   User,
   Settings,
   LogOut,
-  Menu,
-  X,
   Car,
-  Calendar,
   PlusCircle,
+  Calendar,
 } from "lucide-react";
 
 import {
   useRouter,
   usePathname,
 } from "next/navigation";
-
 import Image from "next/image";
 
 const Navbar = () => {
@@ -64,46 +60,38 @@ const Navbar = () => {
   };
 
   const navLinkClass = (path) =>
-    `relative font-medium transition duration-300 ${
+    `font-medium transition ${
       pathname === path
-        ? "text-[#2A6F8F]"
+        ? "text-[#2A6F8F] border-b-2 border-[#2A6F8F] pb-1"
         : "text-gray-700 hover:text-[#2A6F8F]"
     }`;
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-200 shadow-sm">
+    <nav className="border-b border-gray-100 sticky top-0 bg-white/95 backdrop-blur-sm z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 lg:px-8">
-
-        <div className="flex items-center justify-between h-20">
-
-          {/* LEFT */}
-          <div className="flex items-center gap-3">
-
-            {/* MOBILE MENU BUTTON */}
+        
+        <div className="flex items-center justify-between py-4">
+          
+          <div className="flex items-center gap-4">
+            
             <button
               onClick={() =>
                 setOpen(!open)
               }
-              className="md:hidden text-[#1E3C5C]"
+              className="md:hidden text-2xl text-[#1E3C5C] cursor-pointer"
             >
-              {open ? (
-                <X size={28} />
-              ) : (
-                <Menu size={28} />
-              )}
+              ☰
             </button>
 
-            {/* LOGO */}
             <Link href="/">
-              <h1 className="text-3xl font-extrabold bg-gradient-to-r from-[#1E3C5C] to-[#2A6F8F] bg-clip-text text-transparent tracking-tight cursor-pointer">
+              <h1 className="text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-[#1E3C5C] to-[#2A6F8F] bg-clip-text text-transparent tracking-tight">
                 RideNest
               </h1>
             </Link>
           </div>
 
-          {/* DESKTOP MENU */}
           <ul className="hidden md:flex items-center gap-8">
-
+            
             <li>
               <Link
                 className={navLinkClass("/")}
@@ -151,37 +139,31 @@ const Navbar = () => {
             )}
           </ul>
 
-          {/* RIGHT */}
           <div className="relative">
-
+            
             {session?.user ? (
-
               <div className="flex items-center gap-3">
-
-                {/* USER NAME */}
+                
                 <p className="hidden md:block font-semibold text-[#1E3C5C]">
                   {session.user.name}
                 </p>
 
-                {/* USER IMAGE */}
                 <Image
-                  height={42}
-                  width={42}
+                height={40}
+                width={40}
                   src={
                     session.user.image ||
-                    "https://placehold.co/100"
+                    "https://placehold.co/100?text=User"
                   }
                   alt="user"
+                  className="w-10 h-10 rounded-full object-cover border cursor-pointer"
                   onClick={() =>
                     setShowDropdown(
                       !showDropdown
                     )
                   }
-                  className="w-11 h-11 rounded-full object-cover border-2 border-[#2A6F8F] cursor-pointer hover:scale-105 transition"
                 />
-
-                {/* DROPDOWN */}
-                {showDropdown && (
+                   {showDropdown && (
                   <div className="absolute top-14 right-0 w-60 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
 
                     <div className="px-5 py-4 border-b bg-gradient-to-r from-[#1E3C5C] to-[#2A6F8F]">
@@ -201,7 +183,7 @@ const Navbar = () => {
                           false
                         )
                       }
-                      className="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 transition"
+                      className="flex items-center gap-3 px-5 py-3 text-black hover:bg-gray-50 transition"
                     >
                       <PlusCircle size={18} />
                       Add Car
@@ -214,7 +196,7 @@ const Navbar = () => {
                           false
                         )
                       }
-                      className="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 transition"
+                      className="flex items-center gap-3 px-5 py-3 text-black hover:bg-gray-50 transition"
                     >
                       <Calendar size={18} />
                       My Bookings
@@ -227,7 +209,7 @@ const Navbar = () => {
                           false
                         )
                       }
-                      className="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 transition"
+                      className="flex items-center gap-3 px-5 py-3 text-black hover:bg-gray-50 transition"
                     >
                       <Car size={18} />
                       My Cars
@@ -235,7 +217,7 @@ const Navbar = () => {
 
                     <button
                       onClick={handleLogout}
-                      className="w-full flex items-center gap-3 px-5 py-3 text-red-500 hover:bg-red-50 transition cursor-pointer"
+                      className="w-full flex items-center gap-3 px-5 py-3 text-blue-900 hover:bg-red-50 transition cursor-pointer"
                     >
                       <LogOut size={18} />
                       Logout
@@ -243,33 +225,32 @@ const Navbar = () => {
 
                   </div>
                 )}
+                
               </div>
-
             ) : (
-
-              <Link href="/login">
-                <button className="px-7 py-3 rounded-full bg-gradient-to-r from-[#1E3C5C] to-[#2A6F8F] text-white font-semibold shadow-lg hover:scale-105 hover:shadow-2xl transition duration-300 cursor-pointer">
+              <Link href="/login" className="hidden md:block">
+                <button className="px-8 py-2 rounded-full bg-gradient-to-r from-[#1E3C5C] to-[#2A6F8F] text-white text-sm font-semibold shadow-md hover:scale-105 hover:shadow-lg transition duration-300 cursor-pointer">
                   Login/Register
                 </button>
               </Link>
-
             )}
           </div>
         </div>
 
-        {/* MOBILE MENU */}
         {open && (
-          <div className="md:hidden pb-5 animate-in slide-in-from-top-2 duration-300">
-
-            <ul className="flex flex-col gap-4 bg-white rounded-2xl p-5 shadow-lg border border-gray-100">
-
+          <div className="md:hidden pb-5">
+            
+            <ul className="flex flex-col gap-4">
+              
               <li>
                 <Link
+                  className={navLinkClass(
+                    "/"
+                  )}
                   href="/"
                   onClick={() =>
                     setOpen(false)
                   }
-                  className={navLinkClass("/")}
                 >
                   Home
                 </Link>
@@ -277,13 +258,13 @@ const Navbar = () => {
 
               <li>
                 <Link
+                  className={navLinkClass(
+                    "/explore-cars"
+                  )}
                   href="/explore-cars"
                   onClick={() =>
                     setOpen(false)
                   }
-                  className={navLinkClass(
-                    "/explore-cars"
-                  )}
                 >
                   Explore Cars
                 </Link>
@@ -293,13 +274,13 @@ const Navbar = () => {
                 <>
                   <li>
                     <Link
+                      className={navLinkClass(
+                        "/add-car"
+                      )}
                       href="/add-car"
                       onClick={() =>
                         setOpen(false)
                       }
-                      className={navLinkClass(
-                        "/add-car"
-                      )}
                     >
                       Add Car
                     </Link>
@@ -307,13 +288,13 @@ const Navbar = () => {
 
                   <li>
                     <Link
+                      className={navLinkClass(
+                        "/my-bookings"
+                      )}
                       href="/my-bookings"
                       onClick={() =>
                         setOpen(false)
                       }
-                      className={navLinkClass(
-                        "/my-bookings"
-                      )}
                     >
                       My Bookings
                     </Link>
@@ -321,13 +302,13 @@ const Navbar = () => {
 
                   <li>
                     <Link
+                      className={navLinkClass(
+                        "/my-cars"
+                      )}
                       href="/my-cars"
                       onClick={() =>
                         setOpen(false)
                       }
-                      className={navLinkClass(
-                        "/my-cars"
-                      )}
                     >
                       My Cars
                     </Link>
@@ -338,7 +319,7 @@ const Navbar = () => {
                       onClick={
                         handleLogout
                       }
-                      className="text-red-500 font-medium"
+                      className="block font-medium text-red-400 cursor-pointer"
                     >
                       Logout
                     </button>
@@ -349,16 +330,17 @@ const Navbar = () => {
               {!session?.user && (
                 <li>
                   <Link
+                    className="block font-medium text-[#2A6F8F]"
                     href="/login"
                     onClick={() =>
                       setOpen(false)
                     }
-                    className="text-[#2A6F8F] font-semibold"
                   >
-                    Login
+                    Login/Register
                   </Link>
                 </li>
               )}
+
             </ul>
           </div>
         )}
