@@ -129,7 +129,7 @@ export default function CarDetails() {
       const token = data?.token;
 
       const res = await fetch(
-        "${process.env.NEXT_PUBLIC_SERVER_URL}/bookings",
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/bookings`,
         {
           method: "POST",
 
