@@ -75,7 +75,7 @@ const Navbar = () => {
               onClick={() =>
                 setOpen(!open)
               }
-              className="md:hidden text-2xl text-[#1E3C5C]"
+              className="md:hidden text-2xl text-[#1E3C5C] cursor-pointer"
             >
               ☰
             </button>
@@ -209,7 +209,7 @@ const Navbar = () => {
 
                     <button
                       onClick={handleLogout}
-                      className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition-colors"
+                      className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-400 hover:bg-red-50 transition-colors cursor-pointer"
                     >
                       <LogOut size={16} />
 
@@ -220,8 +220,8 @@ const Navbar = () => {
               </div>
             ) : (
               <Link href="/login">
-                <button className="px-8 py-2 rounded-full bg-gradient-to-r from-[#1E3C5C] to-[#2A6F8F] text-white text-sm font-semibold shadow-md hover:scale-105 hover:shadow-lg transition duration-300">
-                  Login
+                <button className="px-8 py-2 rounded-full bg-gradien-to-r from-[#1E3C5C] to-[#2A6F8F] text-white text-sm font-semibold shadow-md hover:scale-105 hover:shadow-lg transition duration-300 cursor-pointer">
+                  Login/Register
                 </button>
               </Link>
             )}
@@ -310,7 +310,7 @@ const Navbar = () => {
                       onClick={
                         handleLogout
                       }
-                      className="block font-medium text-red-400"
+                      className="block font-medium text-red-400 cursor-pointer"
                     >
                       Logout
                     </button>
@@ -327,7 +327,7 @@ const Navbar = () => {
                       setOpen(false)
                     }
                   >
-                    Login/Register
+                    Login
                   </Link>
                 </li>
               )}

@@ -191,7 +191,7 @@ export default function MyCars() {
               <div className="flex gap-2 mt-3">
                 <button
                   onClick={() => openUpdate(car)}
-                  className="bg-blue-600 text-white px-3 py-1 rounded"
+                  className="bg-blue-900 text-white px-3 py-1 rounded cursor-pointer"
                 >
                   Update
                 </button>
@@ -201,7 +201,7 @@ export default function MyCars() {
                     setDeleteId(car._id);
                     setDeleteModal(true);
                   }}
-                  className="bg-red-600 text-white px-3 py-1 rounded"
+                  className="bg-red-400 text-white px-3 py-1 rounded cursor-pointer"
                 >
                   Delete
                 </button>
@@ -213,50 +213,122 @@ export default function MyCars() {
 
       {/* UPDATE MODAL */}
       {showModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
-          <div className="bg-white p-5 rounded w-[400px]">
-            <h2 className="text-xl font-bold mb-3">
-              Update Car
-            </h2>
+        <div className="bg-white w-full max-w-md rounded-3xl shadow-2xl p-6 text-black">
 
-            <input
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              placeholder="Price"
-              className="border p-2 w-full mb-2"
-            />
+  {/* TITLE */}
+  <h2 className="text-3xl font-bold text-center text-[#1E3C5C] mb-6">
+    Update Car
+  </h2>
 
-            <input
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              placeholder="Location"
-              className="border p-2 w-full mb-2"
-            />
+  {/* PRICE */}
+  <div className="mb-4">
+    <label className="block text-sm font-semibold mb-2 text-[#1E3C5C]">
+      Price Per Day
+    </label>
 
-            <textarea
-              value={description}
-              onChange={(e) =>
-                setDescription(e.target.value)
-              }
-              placeholder="Description"
-              className="border p-2 w-full mb-2"
-            />
+    <input
+      type="number"
+      value={price}
+      onChange={(e) => setPrice(e.target.value)}
+      placeholder="Enter price"
+      className="w-full p-3 border border-gray-300 rounded-xl bg-gray-50 focus:bg-white outline-none focus:ring-2 focus:ring-[#2A6F8F]/30 focus:border-[#2A6F8F] transition"
+    />
+  </div>
 
-            <input
-              value={image}
-              onChange={(e) => setImage(e.target.value)}
-              placeholder="Image"
-              className="border p-2 w-full mb-2"
-            />
+  {/* DESCRIPTION */}
+  <div className="mb-4">
+    <label className="block text-sm font-semibold mb-2 text-[#1E3C5C]">
+      Description
+    </label>
 
-            <button
-              onClick={handleUpdate}
-              className="bg-green-600 text-white px-4 py-2 rounded"
-            >
-              Save
-            </button>
-          </div>
-        </div>
+    <textarea
+      value={description}
+      onChange={(e) => setDescription(e.target.value)}
+      placeholder="Write description..."
+      rows="4"
+      className="w-full p-3 border border-gray-300 rounded-xl bg-gray-50 focus:bg-white outline-none focus:ring-2 focus:ring-[#2A6F8F]/30 focus:border-[#2A6F8F] transition resize-none"
+    />
+  </div>
+
+  {/* AVAILABILITY */}
+  <div className="mb-4">
+    <label className="block text-sm font-semibold mb-2 text-[#1E3C5C]">
+      Availability
+    </label>
+
+    <select
+      value={availability}
+      onChange={(e) =>
+        setAvailability(e.target.value === "true")
+      }
+      className="w-full p-3 border border-gray-300 rounded-xl bg-gray-50 focus:bg-white outline-none focus:ring-2 focus:ring-[#2A6F8F]/30 focus:border-[#2A6F8F] transition"
+    >
+      <option value="true">Available</option>
+      <option value="false">Not Available</option>
+    </select>
+  </div>
+
+  {/* IMAGE */}
+  <div className="mb-4">
+    <label className="block text-sm font-semibold mb-2 text-[#1E3C5C]">
+      Image URL
+    </label>
+
+    <input
+      value={image}
+      onChange={(e) => setImage(e.target.value)}
+      placeholder="https://example.com/car.jpg"
+      className="w-full p-3 border border-gray-300 rounded-xl bg-gray-50 focus:bg-white outline-none focus:ring-2 focus:ring-[#2A6F8F]/30 focus:border-[#2A6F8F] transition"
+    />
+  </div>
+
+  {/* TYPE */}
+  <div className="mb-4">
+    <label className="block text-sm font-semibold mb-2 text-[#1E3C5C]">
+      Car Type
+    </label>
+
+    <input
+      value={type}
+      onChange={(e) => setType(e.target.value)}
+      placeholder="SUV / Sedan / Luxury"
+      className="w-full p-3 border border-gray-300 rounded-xl bg-gray-50 focus:bg-white outline-none focus:ring-2 focus:ring-[#2A6F8F]/30 focus:border-[#2A6F8F] transition"
+    />
+  </div>
+
+  {/* LOCATION */}
+  <div className="mb-6">
+    <label className="block text-sm font-semibold mb-2 text-[#1E3C5C]">
+      Location
+    </label>
+
+    <input
+      value={location}
+      onChange={(e) => setLocation(e.target.value)}
+      placeholder="Enter location"
+      className="w-full p-3 border border-gray-300 rounded-xl bg-gray-50 focus:bg-white outline-none focus:ring-2 focus:ring-[#2A6F8F]/30 focus:border-[#2A6F8F] transition"
+    />
+  </div>
+
+  {/* BUTTONS */}
+  <div className="flex gap-3">
+
+    <button
+      onClick={() => setShowModal(false)}
+      className="w-1/2 py-3 rounded-xl bg-red-400 hover:bg-gray-300 transition font-semibold cursor-pointer"
+    >
+      Cancel
+    </button>
+
+    <button
+      onClick={handleUpdate}
+      className="w-1/2 py-3 rounded-xl text-white font-semibold bg-gradien-to-r from-[#1E3C5C] to-[#2A6F8F] hover:opacity-90 transition cursor-pointer"
+    >
+      Save Changes
+    </button>
+
+  </div>
+</div>
       )}
 
       {/* DELETE MODAL */}
@@ -268,14 +340,14 @@ export default function MyCars() {
             <div className="flex gap-3 mt-3">
               <button
                 onClick={() => setDeleteModal(false)}
-                className="bg-gray-400 px-3 py-1 rounded"
+                className="bg-red-400 px-3 py-1 rounded cursor-pointer"
               >
                 Cancel
               </button>
 
               <button
                 onClick={handleDelete}
-                className="bg-red-600 text-white px-3 py-1 rounded"
+                className="bg-red-400 text-white px-3 py-1 rounded cursor-pointer"
               >
                 Delete
               </button>

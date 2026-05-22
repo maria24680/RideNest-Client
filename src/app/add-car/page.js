@@ -118,7 +118,7 @@ const AddCarPage = () => {
             type="submit"
             className="w-full py-3 rounded-lg text-white font-semibold
             bg-linear-to-r from-[#1E3C5C] to-[#2A6F8F]
-            hover:opacity-90 transition shadow-md"
+            hover:opacity-90 transition shadow-md cursor-pointer"
           >
             Add Car
           </button>

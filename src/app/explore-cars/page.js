@@ -63,7 +63,7 @@ export default function ExploreCars() {
         <p className="text-red-400">{error}</p>
         <button
           onClick={() => window.location.reload()}
-          className="px-6 py-2 bg-[#1E3C5C] text-white rounded"
+          className="px-6 py-2 bg-[#1E3C5C] text-white rounded cursor-pointer"
         >
           Retry
         </button>

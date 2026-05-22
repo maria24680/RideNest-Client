@@ -180,7 +180,7 @@ const Footer = () => {
                   placeholder="Your email address"
                   className="flex-1 px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#2A6F8F] transition"
                 />
-                <button className="px-4 py-2 bg-[#2A6F8F] text-white text-sm font-semibold rounded-lg hover:bg-[#1E5A7A] transition">
+                <button className="px-4 py-2 bg-[#2A6F8F] text-white text-sm font-semibold rounded-lg hover:bg-[#1E5A7A] transition cursor-pointer">
                   Subscribe
                 </button>
               </div>

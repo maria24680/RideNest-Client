@@ -196,7 +196,7 @@ export default function RegisterPage() {
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-4 top-1/2 -translate-y-1/2
-                text-sm font-medium text-[#2A6F8F]"
+                text-sm font-medium text-[#2A6F8F] cursor-pointer"
               >
                 {showPassword ? "Hide" : "Show"}
               </button>
@@ -219,7 +219,7 @@ export default function RegisterPage() {
   className="w-full py-3 rounded-xl text-white font-semibold
   bg-gradien-to-r from-[#1E3C5C] to-[#2A6F8F]
   hover:opacity-90 transition duration-300
-  disabled:opacity-60 flex items-center justify-center gap-2"
+  disabled:opacity-60 flex items-center justify-center gap-2 cursor-pointer"
 >
   {loading ? (
     <>
@@ -247,7 +247,7 @@ export default function RegisterPage() {
           <Image
           height={40}
           width={40}
-            className="w-4 h-auto" 
+            className="w-4 h-auto cursor-pointer" 
             src="https://www.svgrepo.com/show/475656/google-color.svg" 
             alt="Google Logo" 
           />

@@ -281,7 +281,7 @@ export default function CarDetails() {
             onClick={() =>
               setOpenModal(true)
             }
-            className="w-full mt-6 py-3 rounded-xl bg-[#1E3C5C] text-white font-semibold hover:bg-blue-900 transition"
+            className="w-full mt-6 py-3 rounded-xl bg-[#1E3C5C] text-white font-semibold hover:bg-blue-900 transition cursor-pointer"
           >
             Book Now
           </button>
@@ -303,7 +303,7 @@ export default function CarDetails() {
                 onClick={() =>
                   setOpenModal(false)
                 }
-                className="text-red-500 text-2xl font-bold"
+                className="text-red-400 text-2xl font-bold"
               >
                 ×
               </button>
@@ -361,7 +361,7 @@ export default function CarDetails() {
                 disabled={
                   bookingLoading
                 }
-                className="w-full py-3 rounded-xl bg-[#1E3C5C] text-white font-semibold hover:bg-blue-800 transition disabled:opacity-50"
+                className="w-full py-3 rounded-xl bg-[#1E3C5C] text-white font-semibold hover:bg-blue-800 transition disabled:opacity-50 cursor-pointer"
               >
                 {bookingLoading
                   ? "Booking..."

@@ -71,7 +71,7 @@ export default function LoginPage() {
         </h1>
 
         <p className="text-sm sm:text-base text-center text-gray-600 mt-3 mb-8">
-          Rent your dream car anytime, anywhere 🚗
+          Rent your dream car anytime, anywhere
         </p>
 
         <form onSubmit={handleLogin} className="space-y-5">
@@ -107,7 +107,7 @@ export default function LoginPage() {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-medium text-[#2A6F8F]"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-medium text-[#2A6F8F] cursor-pointer"
               >
                 {showPassword ? "Hide" : "Show"}
               </button>
@@ -117,7 +117,7 @@ export default function LoginPage() {
          <button
   type="submit"
   disabled={loading}
-  className="w-full py-3 rounded-xl text-white font-semibold bg-gradient-to-r from-[#1E3C5C] to-[#2A6F8F] hover:opacity-90 transition duration-300 disabled:opacity-50 flex items-center justify-center gap-2"
+  className="w-full py-3 rounded-xl text-white font-semibold bg-gradien-to-r from-[#1E3C5C] to-[#2A6F8F] hover:opacity-90 transition duration-300 disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
 >
   {loading ? (
     <>
@@ -139,7 +139,7 @@ export default function LoginPage() {
         <button
           onClick={handleGoogle}
           type="button"
-          className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-xl border border-gray-300 bg-white text-gray-800 shadow-sm hover:bg-gray-50 dependency-focus transition duration-200"
+          className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-xl border border-gray-300 bg-white text-gray-800 shadow-sm hover:bg-gray-50 dependency-focus transition duration-200 cursor-pointer"
         >
           <Image
           width={40}

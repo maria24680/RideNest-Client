@@ -106,13 +106,17 @@ export default function MyBookings() {
         <h1 className="text-3xl font-bold text-center mb-8 text-black">
           My Bookings
         </h1>
+        <p className="text-center text-gray-600 mb-8">
+  You have booked {bookings.length} car
+  {bookings.length !== 1 ? "s" : ""}
+</p>
 
         {bookings.length === 0 ? (
           <p className="text-center text-black">
             No bookings found
           </p>
         ) : (
-          <div className="max-w-4xl mx-auto space-y-4">
+          <div className="max-w-4xl mx-auto space-y-4 text-center">
             {bookings.map((b) => (
               <div
                 key={b._id}
@@ -144,7 +148,7 @@ export default function MyBookings() {
                     setSelectedBookingId(b._id);
                     setDeleteModal(true);
                   }}
-                  className="mt-3 bg-red-500 text-white px-4 py-2 rounded"
+                  className="mt-3 bg-red-400 text-white px-4 py-2 rounded cursor-pointer"
                 >
                   Delete
                 </button>
@@ -164,14 +168,14 @@ export default function MyBookings() {
               <div className="flex gap-3">
                 <button
                   onClick={() => setDeleteModal(false)}
-                  className="px-4 py-2 bg-gray-300"
+                  className="px-4 py-2 bg-gray-300 cursor-pointer"
                 >
                   Cancel
                 </button>
 
                 <button
                   onClick={handleDelete}
-                  className="px-4 py-2 bg-red-500 text-white"
+                  className="px-4 py-2 bg-red-400 text-white cursor-pointer"
                 >
                   Delete
                 </button>
