@@ -47,7 +47,7 @@ useEffect(() => {
           </h2>
 
           <p className="text-gray-600 mt-3">
-            Choose your dream car for your next journey 🚗
+            Choose your dream car for your next journey
           </p>
 
         </div>
