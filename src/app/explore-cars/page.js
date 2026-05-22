@@ -1,4 +1,4 @@
-/* eslint-disable jsx-a11y/alt-text */
+
 "use client";
 
 import Image from "next/image";
@@ -45,20 +45,22 @@ export default function ExploreCars() {
     return [...new Set(types)].sort();
   }, [cars]);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-xl font-semibold text-[#1E3C5C]">
-          Loading cars...
-        </p>
-      </div>
-    );
-  }
+ if (loading) {
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center gap-4 animate-pulse">
+      
+      <div className="w-14 h-14 border-4 border-[#1E3C5C] border-t-transparent rounded-full animate-spin"></div>
 
+      <p className="text-xl font-semibold text-[#1E3C5C]">
+        Loading cars...
+      </p>
+    </div>
+  );
+}
   if (error) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4">
-        <p className="text-red-500">{error}</p>
+        <p className="text-red-400">{error}</p>
         <button
           onClick={() => window.location.reload()}
           className="px-6 py-2 bg-[#1E3C5C] text-white rounded"

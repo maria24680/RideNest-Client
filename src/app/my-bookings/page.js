@@ -85,13 +85,18 @@ export default function MyBookings() {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center text-black">
+ if (loading) {
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center gap-4 text-black">
+      
+      <div className="w-14 h-14 border-4 border-[#1E3C5C] border-t-transparent rounded-full animate-spin"></div>
+
+      <p className="text-xl font-semibold">
         Loading bookings...
-      </div>
-    );
-  }
+      </p>
+    </div>
+  );
+}
 
   return (
     <>

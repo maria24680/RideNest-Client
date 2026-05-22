@@ -199,13 +199,17 @@ export default function CarDetails() {
 
   // SESSION LOADING
   if (isPending || loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center text-xl font-semibold">
-        Loading...
-      </div>
-    );
-  }
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center gap-4">
+      
+      <div className="w-14 h-14 border-4 border-[#1E3C5C] border-t-transparent rounded-full animate-spin"></div>
 
+      <p className="text-xl font-semibold text-[#1E3C5C]">
+        Loading...
+      </p>
+    </div>
+  );
+}
   // CAR NOT FOUND
   if (!car) {
     return (

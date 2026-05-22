@@ -17,10 +17,10 @@ const Footer = () => {
           {/* Brand & Contact Info Column */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-r from-[#2A6F8F] to-[#1E5A7A] rounded-full flex items-center justify-center">
+              <div className="w-8 h-8 bg-gradien-to-r from-[#2A6F8F] to-[#1E5A7A] rounded-full flex items-center justify-center">
                 <span className="text-white font-bold text-sm">R</span>
               </div>
-              <h2 className="text-2xl font-extrabold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+              <h2 className="text-2xl font-extrabold bg-gradien-to-r from-white to-gray-400 bg-clip-text text-transparent">
                 RideNest
               </h2>
             </div>
@@ -31,19 +31,19 @@ const Footer = () => {
             {/* Contact Info */}
             <div className="space-y-3 mt-4">
               <div className="flex items-center gap-3 text-sm">
-                <MdPhone className="text-[#2A6F8F] text-lg flex-shrink-0" />
+                <MdPhone className="text-[#2A6F8F] text-lg flex-shrin-0" />
                 <span className="text-gray-400 hover:text-white transition">+880 1700 000000</span>
               </div>
               <div className="flex items-center gap-3 text-sm">
-                <MdEmail className="text-[#2A6F8F] text-lg flex-shrink-0" />
+                <MdEmail className="text-[#2A6F8F] text-lg flex-shrin-0" />
                 <span className="text-gray-400 hover:text-white transition">info@ridenest.com</span>
               </div>
               <div className="flex items-center gap-3 text-sm">
-                <MdLocationOn className="text-[#2A6F8F] text-lg flex-shrink-0" />
+                <MdLocationOn className="text-[#2A6F8F] text-lg flex-shrin-0" />
                 <span className="text-gray-400">Dhaka, Bangladesh</span>
               </div>
               <div className="flex items-center gap-3 text-sm">
-                <BiTime className="text-[#2A6F8F] text-lg flex-shrink-0" />
+                <BiTime className="text-[#2A6F8F] text-lg flex-shrin-0" />
                 <span className="text-gray-400">24/7 Customer Support</span>
               </div>
             </div>

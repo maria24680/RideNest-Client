@@ -37,7 +37,7 @@ export default function LoginPage() {
         return;
       }
 
-      toast.success("Welcome to RideNest 🚗");
+      toast.success("Welcome to RideNest");
       setTimeout(() => {
         window.location.href = "/";
       }, 1500);
@@ -114,13 +114,20 @@ export default function LoginPage() {
             </div>
           </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-3 rounded-xl text-white font-semibold bg-gradient-to-r from-[#1E3C5C] to-[#2A6F8F] hover:opacity-90 transition duration-300 disabled:opacity-50"
-          >
-            {loading ? "Logging in..." : "Login"}
-          </button>
+         <button
+  type="submit"
+  disabled={loading}
+  className="w-full py-3 rounded-xl text-white font-semibold bg-gradient-to-r from-[#1E3C5C] to-[#2A6F8F] hover:opacity-90 transition duration-300 disabled:opacity-50 flex items-center justify-center gap-2"
+>
+  {loading ? (
+    <>
+      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+      Logging in...
+    </>
+  ) : (
+    "Login"
+  )}
+</button>
         </form>
 
         <div className="relative flex py-5 items-center">

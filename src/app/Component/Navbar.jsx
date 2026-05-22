@@ -205,6 +205,7 @@ const Navbar = () => {
 
                       My Added Cars
                     </Link>
+                    
 
                     <button
                       onClick={handleLogout}
@@ -309,7 +310,7 @@ const Navbar = () => {
                       onClick={
                         handleLogout
                       }
-                      className="block font-medium text-red-600"
+                      className="block font-medium text-red-400"
                     >
                       Logout
                     </button>
@@ -326,10 +327,11 @@ const Navbar = () => {
                       setOpen(false)
                     }
                   >
-                    Login
+                    Login/Register
                   </Link>
                 </li>
               )}
+
             </ul>
           </div>
         )}

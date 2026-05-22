@@ -91,7 +91,7 @@ export default function RegisterPage() {
     };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#edf6fb] to-[#d7ebf5] flex items-center justify-center px-4 py-8">
+    <div className="min-h-screen bg-gradien-to-br from-[#edf6fb] to-[#d7ebf5] flex items-center justify-center px-4 py-8">
 
       <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl p-6 sm:p-8">
         <ToastContainer position="top-right" autoClose={2000} />
@@ -102,7 +102,7 @@ export default function RegisterPage() {
 
         {/* SUBTITLE */}
         <p className="text-sm sm:text-base text-center text-gray-600 mt-3 mb-8">
-          Create your account and start renting 🚗
+          Create your account and start renting 
         </p>
 
         {/* FORM */}
@@ -214,14 +214,22 @@ export default function RegisterPage() {
 
           {/* BUTTON */}
           <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-3 rounded-xl text-white font-semibold
-            bg-gradient-to-r from-[#1E3C5C] to-[#2A6F8F]
-            hover:opacity-90 transition duration-300"
-          >
-            {loading ? "Creating Account..." : "CREATE A ACCOUNT"}
-          </button>
+  type="submit"
+  disabled={loading}
+  className="w-full py-3 rounded-xl text-white font-semibold
+  bg-gradien-to-r from-[#1E3C5C] to-[#2A6F8F]
+  hover:opacity-90 transition duration-300
+  disabled:opacity-60 flex items-center justify-center gap-2"
+>
+  {loading ? (
+    <>
+      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+      Creating Account...
+    </>
+  ) : (
+    "CREATE AN ACCOUNT"
+  )}
+</button>
 
         </form>
 
