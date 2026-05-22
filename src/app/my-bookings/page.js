@@ -125,13 +125,7 @@ export default function MyBookings() {
                 className="bg-white p-4 rounded-xl shadow text-black"
               >
 
-                <Image
-                              alt="car image"
-                              height={400}
-                              width={400}
-                                src={car.image}
-                                className="h-40 w-full object-cover rounded"
-                              />
+  
 
                 <h2 className="text-xl font-bold text-black">
                   {b.carName}
