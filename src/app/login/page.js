@@ -117,7 +117,7 @@ export default function LoginPage() {
          <button
   type="submit"
   disabled={loading}
-  className="w-full py-3 rounded-xl text-white font-semibold bg-gradien-to-r from-[#1E3C5C] to-[#2A6F8F] hover:opacity-90 transition duration-300 disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
+  className="w-full py-3 rounded-xl text-white font-semibold bg-gradient-to-r from-[#1E3C5C] to-[#2A6F8F] hover:opacity-90 transition duration-300 disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
 >
   {loading ? (
     <>
@@ -130,9 +130,9 @@ export default function LoginPage() {
 </button>
         </form>
 
-        <div className="relative flex py-8 items-center">
+        <div className="relative flex py-3 items-center">
           <div className="flex-grow border-t border-gray-300"></div>
-          <span className="flex-shrink mx-4 text-gray-400 text-sm">or</span>
+          <span className="flex-shrink mx-4 text-gray-400 text-sm">OR</span>
           <div className="flex-grow border-t border-gray-300"></div>
         </div>
 
