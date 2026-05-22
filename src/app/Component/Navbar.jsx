@@ -7,9 +7,6 @@ import {
   User,
   Settings,
   LogOut,
-  Car,
-  PlusCircle,
-  Calendar,
 } from "lucide-react";
 
 import {
@@ -163,19 +160,10 @@ const Navbar = () => {
                     )
                   }
                 />
-                   {showDropdown && (
-                  <div className="absolute top-14 right-0 w-60 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
 
-                    <div className="px-5 py-4 border-b bg-gradient-to-r from-[#1E3C5C] to-[#2A6F8F]">
-                      <p className="text-white font-semibold">
-                        {session.user.name}
-                      </p>
-
-                      <p className="text-white/80 text-sm truncate">
-                        {session.user.email}
-                      </p>
-                    </div>
-
+                {showDropdown && (
+                  <div className="absolute top-12 right-0 w-48 bg-white border border-gray-200 rounded-xl shadow-2xl py-2 z-50">
+                    
                     <Link
                       href="/add-car"
                       onClick={() =>
@@ -183,9 +171,10 @@ const Navbar = () => {
                           false
                         )
                       }
-                      className="flex items-center gap-3 px-5 py-3 text-black hover:bg-gray-50 transition"
+                      className="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                     >
-                      <PlusCircle size={18} />
+                      <User size={16} />
+
                       Add Car
                     </Link>
 
@@ -196,9 +185,10 @@ const Navbar = () => {
                           false
                         )
                       }
-                      className="flex items-center gap-3 px-5 py-3 text-black hover:bg-gray-50 transition"
+                      className="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors border-b border-gray-100"
                     >
-                      <Calendar size={18} />
+                      <Settings size={16} />
+
                       My Bookings
                     </Link>
 
@@ -209,26 +199,27 @@ const Navbar = () => {
                           false
                         )
                       }
-                      className="flex items-center gap-3 px-5 py-3 text-black hover:bg-gray-50 transition"
+                      className="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                     >
-                      <Car size={18} />
-                      My Cars
+                      <User size={16} />
+
+                      My Added Cars
                     </Link>
+                    
 
                     <button
                       onClick={handleLogout}
-                      className="w-full flex items-center gap-3 px-5 py-3 text-blue-900 hover:bg-red-50 transition cursor-pointer"
+                      className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-400 hover:bg-red-50 transition-colors cursor-pointer"
                     >
-                      <LogOut size={18} />
+                      <LogOut size={16} />
+
                       Logout
                     </button>
-
                   </div>
                 )}
-                
               </div>
             ) : (
-              <Link href="/login" className="hidden md:block">
+              <Link href="/login">
                 <button className="px-8 py-2 rounded-full bg-gradient-to-r from-[#1E3C5C] to-[#2A6F8F] text-white text-sm font-semibold shadow-md hover:scale-105 hover:shadow-lg transition duration-300 cursor-pointer">
                   Login/Register
                 </button>
@@ -336,7 +327,7 @@ const Navbar = () => {
                       setOpen(false)
                     }
                   >
-                    Login/Register
+                    Login
                   </Link>
                 </li>
               )}
