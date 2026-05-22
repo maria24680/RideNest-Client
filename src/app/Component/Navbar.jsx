@@ -13,6 +13,7 @@ import {
   useRouter,
   usePathname,
 } from "next/navigation";
+
 import Image from "next/image";
 
 const Navbar = () => {
@@ -66,11 +67,13 @@ const Navbar = () => {
   return (
     <nav className="border-b border-gray-100 sticky top-0 bg-white/95 backdrop-blur-sm z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 lg:px-8">
-        
+
+        {/* TOP NAVBAR */}
         <div className="flex items-center justify-between py-4">
-          
+
+          {/* MOBILE MENU BUTTON + LOGO */}
           <div className="flex items-center gap-4">
-            
+
             <button
               onClick={() =>
                 setOpen(!open)
@@ -87,8 +90,9 @@ const Navbar = () => {
             </Link>
           </div>
 
+          {/* DESKTOP MENU */}
           <ul className="hidden md:flex items-center gap-8">
-            
+
             <li>
               <Link
                 className={navLinkClass("/")}
@@ -132,22 +136,34 @@ const Navbar = () => {
                     My Bookings
                   </Link>
                 </li>
+
+                <li>
+                  <Link
+                    className={navLinkClass(
+                      "/my-cars"
+                    )}
+                    href="/my-cars"
+                  >
+                    My Cars
+                  </Link>
+                </li>
               </>
             )}
           </ul>
 
+          {/* RIGHT SIDE */}
           <div className="relative">
-            
+
             {session?.user ? (
               <div className="flex items-center gap-3">
-                
+
                 <p className="hidden md:block font-semibold text-[#1E3C5C]">
                   {session.user.name}
                 </p>
 
                 <Image
-                height={40}
-                width={40}
+                  height={40}
+                  width={40}
                   src={
                     session.user.image ||
                     "https://placehold.co/100?text=User"
@@ -161,83 +177,74 @@ const Navbar = () => {
                   }
                 />
 
+                {/* DESKTOP DROPDOWN */}
                 {showDropdown && (
-                  <div className="absolute top-12 right-0 w-48 bg-white border border-gray-200 rounded-xl shadow-2xl py-2 z-50">
-                    
+                  <div className="absolute top-12 right-0 w-52 bg-white border border-gray-200 rounded-2xl shadow-2xl py-2 z-50">
+
                     <Link
                       href="/add-car"
                       onClick={() =>
-                        setShowDropdown(
-                          false
-                        )
+                        setShowDropdown(false)
                       }
-                      className="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                      className="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition"
                     >
                       <User size={16} />
-
                       Add Car
                     </Link>
 
                     <Link
                       href="/my-bookings"
                       onClick={() =>
-                        setShowDropdown(
-                          false
-                        )
+                        setShowDropdown(false)
                       }
-                      className="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors border-b border-gray-100"
+                      className="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition"
                     >
                       <Settings size={16} />
-
                       My Bookings
                     </Link>
 
                     <Link
                       href="/my-cars"
                       onClick={() =>
-                        setShowDropdown(
-                          false
-                        )
+                        setShowDropdown(false)
                       }
-                      className="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                      className="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition border-b border-gray-100"
                     >
                       <User size={16} />
-
                       My Added Cars
                     </Link>
-                    
 
                     <button
                       onClick={handleLogout}
-                      className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-400 hover:bg-red-50 transition-colors cursor-pointer"
+                      className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-500 hover:bg-red-50 transition cursor-pointer"
                     >
                       <LogOut size={16} />
-
                       Logout
                     </button>
                   </div>
                 )}
               </div>
             ) : (
-              <Link href="/login">
-                <button className="px-8 py-2 rounded-full bg-gradient-to-r from-[#1E3C5C] to-[#2A6F8F] text-white text-sm font-semibold shadow-md hover:scale-105 hover:shadow-lg transition duration-300 cursor-pointer">
-                  Login/Register
-                </button>
-              </Link>
+              <div className="hidden md:block">
+                <Link href="/login">
+                  <button className="px-8 py-2 rounded-full bg-gradient-to-r from-[#1E3C5C] to-[#2A6F8F] text-white text-sm font-semibold shadow-md hover:scale-105 hover:shadow-lg transition duration-300 cursor-pointer">
+                    Login/Register
+                  </button>
+                </Link>
+              </div>
             )}
           </div>
         </div>
 
+        {/* MOBILE DROPDOWN MENU */}
         {open && (
           <div className="md:hidden pb-5">
-            
-            <ul className="flex flex-col gap-4">
-              
+
+            <ul className="flex flex-col gap-4 bg-white rounded-2xl p-4 shadow-lg border border-gray-100">
+
               <li>
                 <Link
-                  className={navLinkClass(
-                    "/"
-                  )}
+                  className={navLinkClass("/")}
                   href="/"
                   onClick={() =>
                     setOpen(false)
@@ -261,7 +268,7 @@ const Navbar = () => {
                 </Link>
               </li>
 
-              {session?.user && (
+              {session?.user ? (
                 <>
                   <li>
                     <Link
@@ -310,23 +317,27 @@ const Navbar = () => {
                       onClick={
                         handleLogout
                       }
-                      className="block font-medium text-red-400 cursor-pointer"
+                      className="block font-medium text-red-500 cursor-pointer"
                     >
                       Logout
                     </button>
                   </li>
                 </>
+              ) : (
+                <li>
+                  <Link
+                    href="/login"
+                    onClick={() =>
+                      setOpen(false)
+                    }
+                    className="block"
+                  >
+                    <button className="w-full py-2 rounded-xl bg-gradient-to-r from-[#1E3C5C] to-[#2A6F8F] text-white text-sm font-semibold shadow-md">
+                      Login/Register
+                    </button>
+                  </Link>
+                </li>
               )}
-
-              {!session?.user && (
-  <div className="hidden md:block">
-    <Link href="/login">
-      <button className="px-8 py-2 rounded-full bg-gradient-to-r from-[#1E3C5C] to-[#2A6F8F] text-white text-sm font-semibold shadow-md hover:scale-105 hover:shadow-lg transition duration-300 cursor-pointer">
-        Login/Register
-      </button>
-    </Link>
-  </div>
-)}
 
             </ul>
           </div>
