@@ -118,6 +118,7 @@ export default function MyBookings() {
         ) : (
           <div className="max-w-4xl mx-auto space-y-4 text-center">
             {bookings.map((b) => (
+              
               <div
                 key={b._id}
                 className="bg-white p-4 rounded-xl shadow text-black"
