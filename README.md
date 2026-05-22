@@ -1,24 +1,42 @@
-# RideNest - Car Rental Platform
+🚗 RideNest - Client Side
+📌 Project Name
 
-Live Site: https://ride-nest-bice.vercel.app/
+RideNest - Car Rental Booking Platform
 
-## About RideNest
-RideNest is a full-stack car rental platform where users can explore cars, book vehicles, and manage their own listings with secure authentication and a modern responsive UI.
+🎯 Purpose
 
-## Features
-- Secure user authentication with JWT protection
-- Users can add, update, and delete their own car listings
-- Browse and explore available cars with detailed information
-- Booking system with driver option and special notes
-- My Bookings dashboard to manage all user reservations
-- Responsive design for mobile, tablet, and desktop
+RideNest is a modern car rental booking platform built using the MERN Stack.
+It allows users to explore available cars, book rentals, manage their bookings, and securely authenticate using email/password or Google login.
 
-## Tech Stack
-- Next.js (Frontend)
-- Node.js + Express (Backend)
-- MongoDB (Database)
-- JWT Authentication
+🌐 Live URL
 
-## Deployment
-- Frontend: Vercel
-- Backend: Render
+https://ride-nest-bice.vercel.app
+
+✨ Features
+🔐 User Authentication (Login / Register / Google Login)
+🚘 Browse Available Cars
+📅 Book Cars Easily
+👤 User Dashboard (My Cars, My Bookings)
+➕ Add New Cars
+✏️ Update & Delete Cars
+🔎 Search & Filter Cars by Type
+📱 Fully Responsive UI (Mobile / Tablet / Desktop)
+⚡ Protected Routes for Private Pages
+🎨 Modern & Recruiter-Friendly UI Design
+🔔 Toast Notifications for Success & Error Messages
+🧭 Dynamic Navbar Based on Authentication State
+❌ Custom 404 Page
+⏳ Beautiful Loading Spinner for Async Data
+📦 Real-Time Booking Count Update
+🔒 JWT Protected API Integration
+🛠️ Tech Stack
+Next.js
+React.js
+Tailwind CSS
+MongoDB
+Express.js
+Node.js
+Better Auth
+JWT Authentication
+React Toastify
+Framer Motion
