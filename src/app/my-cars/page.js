@@ -214,18 +214,18 @@ export default function MyCars() {
       {/* UPDATE MODAL */}
       {/* UPDATE MODAL */}
 {showModal && (
-  <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+  <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 overflow-y-auto">
 
-    <div className="bg-white w-full max-w-md rounded-3xl shadow-2xl p-6 text-black">
+    <div className="bg-white w-full max-w-sm md:max-w-md rounded-2xl shadow-2xl p-5 text-black max-h-[90vh] overflow-y-auto">
 
       {/* TITLE */}
-      <h2 className="text-3xl font-bold text-center text-[#1E3C5C] mb-6">
+      <h2 className="text-2xl font-bold text-center text-[#1E3C5C] mb-5">
         Update Car
       </h2>
 
       {/* PRICE */}
-      <div className="mb-4">
-        <label className="block text-sm font-semibold mb-2 text-[#1E3C5C]">
+      <div className="mb-3">
+        <label className="block text-sm font-semibold mb-1 text-[#1E3C5C]">
           Price Per Day
         </label>
 
@@ -234,13 +234,13 @@ export default function MyCars() {
           value={price}
           onChange={(e) => setPrice(e.target.value)}
           placeholder="Enter price"
-          className="w-full p-3 border border-gray-300 rounded-xl bg-gray-50 focus:bg-white outline-none focus:ring-2 focus:ring-[#2A6F8F]/30 focus:border-[#2A6F8F] transition"
+          className="w-full p-2.5 border border-gray-300 rounded-xl bg-gray-50 outline-none focus:ring-2 focus:ring-[#2A6F8F]/30"
         />
       </div>
 
       {/* DESCRIPTION */}
-      <div className="mb-4">
-        <label className="block text-sm font-semibold mb-2 text-[#1E3C5C]">
+      <div className="mb-3">
+        <label className="block text-sm font-semibold mb-1 text-[#1E3C5C]">
           Description
         </label>
 
@@ -248,14 +248,14 @@ export default function MyCars() {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Write description..."
-          rows="4"
-          className="w-full p-3 border border-gray-300 rounded-xl bg-gray-50 focus:bg-white outline-none focus:ring-2 focus:ring-[#2A6F8F]/30 focus:border-[#2A6F8F] transition resize-none"
+          rows="3"
+          className="w-full p-2.5 border border-gray-300 rounded-xl bg-gray-50 outline-none focus:ring-2 focus:ring-[#2A6F8F]/30 resize-none"
         />
       </div>
 
       {/* AVAILABILITY */}
-      <div className="mb-4">
-        <label className="block text-sm font-semibold mb-2 text-[#1E3C5C]">
+      <div className="mb-3">
+        <label className="block text-sm font-semibold mb-1 text-[#1E3C5C]">
           Availability
         </label>
 
@@ -264,7 +264,7 @@ export default function MyCars() {
           onChange={(e) =>
             setAvailability(e.target.value === "true")
           }
-          className="w-full p-3 border border-gray-300 rounded-xl bg-gray-50 focus:bg-white outline-none focus:ring-2 focus:ring-[#2A6F8F]/30 focus:border-[#2A6F8F] transition"
+          className="w-full p-2.5 border border-gray-300 rounded-xl bg-gray-50 outline-none focus:ring-2 focus:ring-[#2A6F8F]/30"
         >
           <option value="true">Available</option>
           <option value="false">Not Available</option>
@@ -272,36 +272,36 @@ export default function MyCars() {
       </div>
 
       {/* IMAGE */}
-      <div className="mb-4">
-        <label className="block text-sm font-semibold mb-2 text-[#1E3C5C]">
+      <div className="mb-3">
+        <label className="block text-sm font-semibold mb-1 text-[#1E3C5C]">
           Image URL
         </label>
 
         <input
           value={image}
           onChange={(e) => setImage(e.target.value)}
-          placeholder="https://example.com/car.jpg"
-          className="w-full p-3 border border-gray-300 rounded-xl bg-gray-50 focus:bg-white outline-none focus:ring-2 focus:ring-[#2A6F8F]/30 focus:border-[#2A6F8F] transition"
+          placeholder="Image URL"
+          className="w-full p-2.5 border border-gray-300 rounded-xl bg-gray-50 outline-none focus:ring-2 focus:ring-[#2A6F8F]/30"
         />
       </div>
 
       {/* TYPE */}
-      <div className="mb-4">
-        <label className="block text-sm font-semibold mb-2 text-[#1E3C5C]">
+      <div className="mb-3">
+        <label className="block text-sm font-semibold mb-1 text-[#1E3C5C]">
           Car Type
         </label>
 
         <input
           value={type}
           onChange={(e) => setType(e.target.value)}
-          placeholder="SUV / Sedan / Luxury"
-          className="w-full p-3 border border-gray-300 rounded-xl bg-gray-50 focus:bg-white outline-none focus:ring-2 focus:ring-[#2A6F8F]/30 focus:border-[#2A6F8F] transition"
+          placeholder="SUV / Sedan"
+          className="w-full p-2.5 border border-gray-300 rounded-xl bg-gray-50 outline-none focus:ring-2 focus:ring-[#2A6F8F]/30"
         />
       </div>
 
       {/* LOCATION */}
-      <div className="mb-6">
-        <label className="block text-sm font-semibold mb-2 text-[#1E3C5C]">
+      <div className="mb-5">
+        <label className="block text-sm font-semibold mb-1 text-[#1E3C5C]">
           Location
         </label>
 
@@ -309,23 +309,23 @@ export default function MyCars() {
           value={location}
           onChange={(e) => setLocation(e.target.value)}
           placeholder="Enter location"
-          className="w-full p-3 border border-gray-300 rounded-xl bg-gray-50 focus:bg-white outline-none focus:ring-2 focus:ring-[#2A6F8F]/30 focus:border-[#2A6F8F] transition"
+          className="w-full p-2.5 border border-gray-300 rounded-xl bg-gray-50 outline-none focus:ring-2 focus:ring-[#2A6F8F]/30"
         />
       </div>
 
       {/* BUTTONS */}
-      <div className="flex gap-3">
+      <div className="flex gap-3 sticky bottom-0 bg-white pt-2">
 
         <button
           onClick={() => setShowModal(false)}
-          className="w-1/2 py-3 rounded-xl bg-gray-200 hover:bg-gray-300 transition font-semibold cursor-pointer"
+          className="w-1/2 py-2.5 rounded-xl bg-gray-200 hover:bg-gray-300 transition font-semibold"
         >
           Cancel
         </button>
 
         <button
           onClick={handleUpdate}
-          className="w-1/2 py-3 rounded-xl text-white font-semibold bg-gradient-to-r from-[#1E3C5C] to-[#2A6F8F] hover:opacity-90 transition cursor-pointer"
+          className="w-1/2 py-2.5 rounded-xl text-white font-semibold bg-gradient-to-r from-[#1E3C5C] to-[#2A6F8F] hover:opacity-90 transition"
         >
           Save Changes
         </button>

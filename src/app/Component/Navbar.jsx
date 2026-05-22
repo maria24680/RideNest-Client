@@ -220,7 +220,7 @@ const Navbar = () => {
               </div>
             ) : (
               <Link href="/login">
-                <button className="px-8 py-2 rounded-full bg-gradien-to-r from-[#1E3C5C] to-[#2A6F8F] text-white text-sm font-semibold shadow-md hover:scale-105 hover:shadow-lg transition duration-300 cursor-pointer">
+                <button className="px-8 py-2 rounded-full bg-gradient-to-r from-[#1E3C5C] to-[#2A6F8F] text-white text-sm font-semibold shadow-md hover:scale-105 hover:shadow-lg transition duration-300 cursor-pointer">
                   Login/Register
                 </button>
               </Link>

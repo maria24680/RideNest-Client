@@ -1,6 +1,7 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -116,13 +117,22 @@ export default function MyBookings() {
             No bookings found
           </p>
         ) : (
-          <div className="max-w-4xl mx-auto space-y-4 text-center">
+          <div className="grid md:grid-cols-3 gap-5 max-w-6xl mx-auto">
             {bookings.map((b) => (
               
               <div
                 key={b._id}
                 className="bg-white p-4 rounded-xl shadow text-black"
               >
+
+                <Image
+                              alt="car image"
+                              height={400}
+                              width={400}
+                                src={car.image}
+                                className="h-40 w-full object-cover rounded"
+                              />
+
                 <h2 className="text-xl font-bold text-black">
                   {b.carName}
                 </h2>
